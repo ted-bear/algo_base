@@ -54,6 +54,11 @@ public class LinkedList {
     }
 
     public boolean remove(int _value) {
+
+        if (head == null) {
+            return false;
+        }
+
         Node node = head;
 
         // First element is equal value

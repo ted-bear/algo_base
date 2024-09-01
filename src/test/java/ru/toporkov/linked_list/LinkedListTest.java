@@ -27,6 +27,17 @@ class LinkedListTest {
     }
 
     @Test
+    void remove_empty() {
+        ll = new LinkedList();
+
+        boolean removed = ll.remove(12);
+
+        assertFalse(removed);
+        assertNull(ll.head);
+        assertNull(ll.tail);
+    }
+
+    @Test
     void remove_last_elem() {
         initLongLinkedList();
 
