@@ -210,6 +210,7 @@ class LinkedListTest {
 
         assertEquals(1, ll.count());
         assertEquals(ll.head, newNode);
+        assertEquals(ll.tail, newNode);
         assertNotNull(ll.find(2));
     }
 

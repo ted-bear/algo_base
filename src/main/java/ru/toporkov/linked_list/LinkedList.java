@@ -15,14 +15,11 @@ public class LinkedList {
     }
 
     public void addInTail(Node item) {
-        if (head == null) {
+        if (head == null)
             head = item;
-        } else {
+        else
             tail.next = item;
-        }
-
         tail = item;
-        tail.next = null;
         size++;
     }
 
@@ -127,8 +124,13 @@ public class LinkedList {
 
     public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
         if (_nodeAfter == null) {
-            _nodeToInsert.next = head;
-            head = _nodeToInsert;
+            if (head == null) {
+                head = _nodeToInsert;
+                tail = _nodeToInsert;
+            } else {
+                _nodeToInsert.next = head;
+                head = _nodeToInsert;
+            }
         } else {
             Node node = head;
 
