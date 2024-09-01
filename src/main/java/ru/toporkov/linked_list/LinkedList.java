@@ -124,13 +124,12 @@ public class LinkedList {
 
     public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
         if (_nodeAfter == null) {
-            if (head == null) {
-                head = _nodeToInsert;
+            if (tail == null) {
                 tail = _nodeToInsert;
             } else {
                 _nodeToInsert.next = head;
-                head = _nodeToInsert;
             }
+            head = _nodeToInsert;
         } else {
             Node node = head;
 
