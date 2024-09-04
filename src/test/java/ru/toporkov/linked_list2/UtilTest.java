@@ -3,7 +3,9 @@ package ru.toporkov.linked_list2;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UtilTest {
 
@@ -59,5 +61,92 @@ class UtilTest {
         assertEquals(8, list.head.value);
         assertNull(list.tail.next);
         assertNull(list.head.prev);
+    }
+
+    @Test
+    void isThereCycle_one_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node = new Node(4);
+        list.addInTail(node);
+
+        assertFalse(Util.isThereCycle(list));
+    }
+
+    @Test
+    void isThereCycle_two_elements_without_cycle() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(5);
+        list.addInTail(node1);
+        list.addInTail(node2);
+
+        assertFalse(Util.isThereCycle(list));
+    }
+
+    @Test
+    void isThereCycle_two_elements_with_cycle() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(5);
+        list.addInTail(node1);
+        list.addInTail(node2);
+
+        list.tail.next = list.head;
+
+        assertTrue(Util.isThereCycle(list));
+    }
+
+    @Test
+    void isThereCycle_many_elements_with_cycle() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(5);
+        Node node3 = new Node(6);
+        Node node4 = new Node(7);
+        Node node5 = new Node(8);
+        list.addInTail(node1);
+        list.addInTail(node2);
+        list.addInTail(node3);
+        list.addInTail(node4);
+        list.addInTail(node5);
+
+        list.tail.next = node3;
+
+        assertTrue(Util.isThereCycle(list));
+    }
+
+    @Test
+    void isThereCycle_many_elements_without_cycle() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(5);
+        Node node3 = new Node(6);
+        Node node4 = new Node(7);
+        Node node5 = new Node(8);
+        list.addInTail(node1);
+        list.addInTail(node2);
+        list.addInTail(node3);
+        list.addInTail(node4);
+        list.addInTail(node5);
+
+        assertFalse(Util.isThereCycle(list));
+    }
+
+    @Test
+    void isThereCycle_many_elements_with_cycle_no() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(5);
+        Node node3 = new Node(6);
+        Node node4 = new Node(7);
+        Node node5 = new Node(8);
+        list.addInTail(node1);
+        list.addInTail(node2);
+        list.addInTail(node3);
+        list.addInTail(node4);
+        list.addInTail(node5);
+        list.addInTail(node2);
+
+        assertTrue(Util.isThereCycle(list));
     }
 }

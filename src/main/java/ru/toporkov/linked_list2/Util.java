@@ -16,4 +16,27 @@ public final class Util {
 
         return list;
     }
+
+    public static boolean isThereCycle(LinkedList2 list) {
+
+        if (list.head == null) {
+            return false;
+        }
+
+        if (list.head.next == list.head) {
+            return true;
+        }
+
+        Node slow = list.head;
+        Node fast = list.head.next;
+
+        while (fast != null && fast.next != null && fast != slow) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+
+        }
+
+        return fast != null && fast.next != null;
+    }
 }
