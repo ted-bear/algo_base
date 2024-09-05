@@ -149,4 +149,106 @@ class UtilTest {
 
         assertTrue(Util.isThereCycle(list));
     }
+
+    @Test
+    void sort_single_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(3);
+        list.addInTail(node1);
+
+        Util.sort(list);
+
+        assertEquals(3, list.head.value);
+
+    }
+
+    @Test
+    void sort_pair_no_sort_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(3);
+        Node node2 = new Node(4);
+        list.addInTail(node1);
+        list.addInTail(node2);
+
+        Util.sort(list);
+
+        assertEquals(3, list.head.value);
+        assertEquals(4, list.tail.value);
+    }
+
+    @Test
+    void sort_pair_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(3);
+        list.addInTail(node1);
+        list.addInTail(node2);
+
+        Util.sort(list);
+
+        assertEquals(3, list.head.value);
+        assertEquals(4, list.tail.value);
+    }
+
+    @Test
+    void sort_pair_equal_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(4);
+        list.addInTail(node1);
+        list.addInTail(node2);
+
+        Util.sort(list);
+
+        assertEquals(4, list.head.value);
+        assertEquals(4, list.tail.value);
+    }
+
+    @Test
+    void sort_many_sorted_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(5);
+        Node node3 = new Node(6);
+        Node node4 = new Node(7);
+        Node node5 = new Node(8);
+        list.addInTail(node1);
+        list.addInTail(node2);
+        list.addInTail(node3);
+        list.addInTail(node4);
+        list.addInTail(node5);
+
+        Util.sort(list);
+
+        Node node = list.head.next;
+
+        while (node != null) {
+            assertTrue(node.value > node.prev.value);
+            node = node.next;
+        }
+    }
+
+    @Test
+    void sort_many_not_sorted_element() {
+        LinkedList2 list = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(6);
+        Node node3 = new Node(5);
+        Node node4 = new Node(7);
+        Node node5 = new Node(1);
+        list.addInTail(node1);
+        list.addInTail(node2);
+        list.addInTail(node3);
+        list.addInTail(node4);
+        list.addInTail(node5);
+
+        Util.sort(list);
+
+        Node node = list.head.next;
+
+        while (node != null) {
+            assertTrue(node.value > node.prev.value);
+            node = node.next;
+        }
+    }
 }

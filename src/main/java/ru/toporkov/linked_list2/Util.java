@@ -39,4 +39,30 @@ public final class Util {
 
         return fast != null && fast.next != null;
     }
+
+    public static void sort(LinkedList2 list) {
+
+        if (list.count() <= 1) {
+            return;
+        }
+
+        Node sorted = list.head;
+
+        while (sorted != null) {
+            Node minNode = sorted;
+            Node node = sorted;
+
+            while (node != null) {
+                if (node.value < minNode.value) {
+                    minNode = node;
+                }
+                node = node.next;
+            }
+
+            int temp = sorted.value;
+            sorted.value = minNode.value;
+            minNode.value = temp;
+            sorted = sorted.next;
+        }
+    }
 }
