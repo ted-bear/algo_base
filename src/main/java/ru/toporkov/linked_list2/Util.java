@@ -2,7 +2,7 @@ package ru.toporkov.linked_list2;
 
 public final class Util {
 
-    public static LinkedList2 reverseList(LinkedList2 list) {
+    public static void reverseList(LinkedList2 list) {
         Node node = list.head;
         list.head = list.tail;
         list.tail = node;
@@ -13,8 +13,6 @@ public final class Util {
             node.prev = temp;
             node = temp;
         }
-
-        return list;
     }
 
     public static boolean isThereCycle(LinkedList2 list) {

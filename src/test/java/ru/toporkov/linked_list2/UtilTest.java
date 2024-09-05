@@ -15,9 +15,7 @@ class UtilTest {
         Node node = new Node(4);
         list.addInTail(node);
 
-        LinkedList2 res = Util.reverseList(list);
-
-        assertEquals(1, res.count());
+        assertEquals(1, list.count());
         assertNull(list.tail.next);
         assertNull(list.head.prev);
     }
@@ -34,9 +32,9 @@ class UtilTest {
         list.addInTail(node3);
         list.addInTail(node4);
 
-        LinkedList2 res = Util.reverseList(list);
+        Util.reverseList(list);
 
-        assertEquals(4, res.count());
+        assertEquals(4, list.count());
         assertEquals(4, list.tail.value);
         assertEquals(11, list.head.value);
         assertEquals(9, list.head.next.value);
@@ -54,9 +52,9 @@ class UtilTest {
         list.addInTail(node1);
         list.addInTail(node2);
 
-        LinkedList2 res = Util.reverseList(list);
+        Util.reverseList(list);
 
-        assertEquals(2, res.count());
+        assertEquals(2, list.count());
         assertEquals(4, list.tail.value);
         assertEquals(8, list.head.value);
         assertNull(list.tail.next);
