@@ -65,4 +65,35 @@ public final class Util {
             sorted = sorted.next;
         }
     }
+
+    public static LinkedList2 merge(LinkedList2 list1, LinkedList2 list2) {
+        sort(list1);
+        sort(list2);
+
+        LinkedList2 result = new LinkedList2();
+        Node firstNode = list1.head;
+        Node secondNode = list2.head;
+
+        while (firstNode != null && secondNode != null) {
+            if (firstNode.value < secondNode.value) {
+                result.addInTail(new Node(firstNode.value));
+                firstNode = firstNode.next;
+            } else {
+                result.addInTail(new Node(secondNode.value));
+                secondNode = secondNode.next;
+            }
+        }
+
+        while (firstNode != null) {
+            result.addInTail(new Node(firstNode.value));
+            firstNode = firstNode.next;
+        }
+
+        while (secondNode != null) {
+            result.addInTail(new Node(secondNode.value));
+            secondNode = secondNode.next;
+        }
+
+        return result;
+    }
 }

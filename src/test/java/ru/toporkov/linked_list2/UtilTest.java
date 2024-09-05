@@ -251,4 +251,109 @@ class UtilTest {
             node = node.next;
         }
     }
+
+    @Test
+    void merge_many_not_sorted_element() {
+        LinkedList2 list1 = new LinkedList2();
+        Node node1 = new Node(4);
+        Node node2 = new Node(6);
+        Node node3 = new Node(5);
+        Node node4 = new Node(7);
+        Node node5 = new Node(1);
+        list1.addInTail(node1);
+        list1.addInTail(node2);
+        list1.addInTail(node3);
+        list1.addInTail(node4);
+        list1.addInTail(node5);
+
+        LinkedList2 list2 = new LinkedList2();
+        Node node21 = new Node(8);
+        Node node22 = new Node(2);
+        Node node23 = new Node(0);
+        Node node24 = new Node(9);
+        Node node25 = new Node(3);
+        list2.addInTail(node21);
+        list2.addInTail(node22);
+        list2.addInTail(node23);
+        list2.addInTail(node24);
+        list2.addInTail(node25);
+
+        LinkedList2 result = Util.merge(list1, list2);
+
+        Node node = result.head.next;
+
+        while (node != null) {
+            assertTrue(node.value > node.prev.value);
+            node = node.next;
+        }
+    }
+
+    @Test
+    void merge_empty_lists() {
+        LinkedList2 list1 = new LinkedList2();
+        LinkedList2 list2 = new LinkedList2();
+
+        LinkedList2 result = Util.merge(list1, list2);
+
+        assertNull(result.head);
+    }
+
+    @Test
+    void merge_single_not_sorted_lists() {
+        LinkedList2 list1 = new LinkedList2();
+        list1.addInTail(new Node(10));
+        LinkedList2 list2 = new LinkedList2();
+        list2.addInTail(new Node(5));
+
+        LinkedList2 result = Util.merge(list1, list2);
+        Node node = result.head.next;
+
+        while (node != null) {
+            assertTrue(node.value > node.prev.value);
+            node = node.next;
+        }
+    }
+
+    @Test
+    void merge_different_len_not_sorted_lists() {
+        LinkedList2 list1 = new LinkedList2();
+        list1.addInTail(new Node(10));
+        list1.addInTail(new Node(9));
+        list1.addInTail(new Node(8));
+        list1.addInTail(new Node(7));
+        LinkedList2 list2 = new LinkedList2();
+        list2.addInTail(new Node(6));
+        list2.addInTail(new Node(5));
+        list2.addInTail(new Node(4));
+        list2.addInTail(new Node(3));
+        list2.addInTail(new Node(2));
+        list2.addInTail(new Node(1));
+
+        LinkedList2 result = Util.merge(list1, list2);
+        Node node = result.head.next;
+
+        while (node != null) {
+            assertTrue(node.value > node.prev.value);
+            node = node.next;
+        }
+    }
+
+    @Test
+    void merge_different_len_sorted_lists() {
+        LinkedList2 list1 = new LinkedList2();
+        list1.addInTail(new Node(10));
+        list1.addInTail(new Node(11));
+        list1.addInTail(new Node(12));
+        list1.addInTail(new Node(13));
+        LinkedList2 list2 = new LinkedList2();
+        list2.addInTail(new Node(15));
+
+        LinkedList2 result = Util.merge(list1, list2);
+        Node node = result.head.next;
+
+        while (node != null) {
+            assertTrue(node.value > node.prev.value);
+            node = node.next;
+        }
+    }
 }
