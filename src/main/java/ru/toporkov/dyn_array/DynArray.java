@@ -77,7 +77,7 @@ public class DynArray<T> {
         array[count - 1] = null;
         count--;
 
-        if (2 * capacity > 3 * count) {
+        if (count * 2 < capacity) {
             int newSize = capacity * 2 / 3;
             newSize = newSize > 16 ? newSize : DEFAULT_CAPACITY;
             makeArray(newSize);
