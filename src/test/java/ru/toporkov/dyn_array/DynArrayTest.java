@@ -21,6 +21,29 @@ class DynArrayTest {
     }
 
     @Test
+    void append_string_arr_buffer_not_full() {
+        DynArray<String> array = new DynArray<>(String.class);
+        array.append("String");
+
+        assertEquals(defaultCapacity, array.capacity);
+        assertEquals(1, array.count);
+        assertEquals("String", array.getItem(0));
+    }
+
+    @Test
+    void append_string_arr_buffer_full() {
+        DynArray<String> array = new DynArray<>(String.class);
+        for (int i = 0; i < 16; i++) {
+            array.append("" + (i + 1));
+        }
+
+        array.append("100");
+
+        assertEquals(defaultCapacity * 2, array.capacity);
+        assertEquals("100", array.getItem(array.count - 1));
+    }
+
+    @Test
     void append_buffer_is_full() {
         array = new DynArray<>(Integer.class);
 

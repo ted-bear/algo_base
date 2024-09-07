@@ -70,7 +70,10 @@ public class DynArray<T> {
     public void remove(int index) {
         validateIndex(index);
 
-        System.arraycopy(array, index + 1, array, index, count - index - 1);
+        if (index != count - 1) {
+            System.arraycopy(array, index + 1, array, index, count - index - 1);
+        }
+
         array[count - 1] = null;
         count--;
 
@@ -93,5 +96,4 @@ public class DynArray<T> {
             makeArray(newCapacity);
         }
     }
-
 }
