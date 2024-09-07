@@ -9,8 +9,8 @@ public class ImprovedLinkedList {
     private int size;
 
     public ImprovedLinkedList() {
-        head = new Node(true);
-        tail = new Node(true);
+        head = new DummyNode();
+        tail = new DummyNode();
         head.next = tail;
         tail.prev = head;
         size = 0;
@@ -55,7 +55,7 @@ public class ImprovedLinkedList {
     public boolean remove(int _value) {
         Node node = head.next;
 
-        while (!node.isDummy && node.value != _value) {
+        while (!isNodeDummy(node) && node.value != _value) {
             node = node.next;
         }
 
@@ -73,7 +73,7 @@ public class ImprovedLinkedList {
     public void removeAll(int _value) {
         Node node = head.next;
 
-        while (!node.isDummy) {
+        while (!isNodeDummy(node)) {
             if (node.value == _value) {
                 Node temp = node.next;
                 node.prev.next = temp;
@@ -108,16 +108,27 @@ public class ImprovedLinkedList {
 
         Node after = head.next;
 
-        while (!after.isDummy && after != _nodeAfter) {
+        while (!isNodeDummy(after) && after != _nodeAfter) {
             after = after.next;
         }
 
-        if (!after.isDummy) {
+        if (!isNodeDummy(after)) {
             _nodeToInsert.next = after.next;
             after.next.prev = _nodeToInsert;
             after.next = _nodeToInsert;
             _nodeToInsert.prev = after;
             size++;
         }
+    }
+
+    private boolean isNodeDummy(Node node) {
+        return node instanceof DummyNode;
+    }
+}
+
+class DummyNode extends Node {
+
+    public DummyNode() {
+
     }
 }
