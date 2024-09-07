@@ -71,6 +71,7 @@ public class DynArray<T> {
         validateIndex(index);
 
         System.arraycopy(array, index + 1, array, index, count - index - 1);
+        array[count - 1] = null;
         count--;
 
         if (2 * capacity > 3 * count) {
