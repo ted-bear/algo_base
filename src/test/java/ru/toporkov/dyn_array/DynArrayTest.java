@@ -81,6 +81,27 @@ class DynArrayTest {
     }
 
     @Test
+    void remove_without_change_buffer_middle_element() {
+        array = new DynArray<>(Integer.class);
+
+        for (int i = 0; i < 16; i++) {
+            array.append(i + 1);
+        }
+
+        array.remove(4);
+
+        for (int i = 0; i < 4; i++) {
+            assertEquals(i + 1, array.getItem(i));
+        }
+
+        for (int i = 4; i < array.count; i++) {
+            assertEquals(i + 2, array.getItem(i));
+        }
+
+        assertEquals(defaultCapacity, array.capacity);
+    }
+
+    @Test
     void remove_with_change_buffer() {
         array = new DynArray<>(Integer.class);
 
