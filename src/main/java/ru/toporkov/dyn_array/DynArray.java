@@ -57,7 +57,7 @@ public class DynArray<T> {
         expandArrayIfNeed();
 
         if (index == count) {
-            array[capacity - 1] = itm;
+            array[count] = itm;
         } else {
             System.arraycopy(array, index, array, index + 1, count - index);
             array[index] = itm;
