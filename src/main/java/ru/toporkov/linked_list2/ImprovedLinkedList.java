@@ -5,29 +5,27 @@ import java.util.ArrayList;
 public class ImprovedLinkedList {
 
     Node head;
-    Node tail;
     private int size;
 
     public ImprovedLinkedList() {
         head = new DummyNode();
-        tail = new DummyNode();
-        head.next = tail;
-        tail.prev = head;
+        head.next = head;
+        head.prev = head;
         size = 0;
     }
 
     public void addInTail(Node _item) {
-        tail.prev.next = _item;
-        _item.prev = tail.prev;
-        tail.prev = _item;
-        _item.next = tail;
+        head.prev.next = _item;
+        _item.prev = head.prev;
+        head.prev = _item;
+        _item.next = head;
         size++;
     }
 
     public Node find(int _value) {
-        Node node = head;
+        Node node = head.next;
 
-        while (node != null) {
+        while (node != head) {
             if (node.value == _value) {
                 return node;
             }
@@ -40,9 +38,9 @@ public class ImprovedLinkedList {
     public ArrayList<Node> findAll(int _value) {
         ArrayList<Node> nodes = new ArrayList<Node>();
 
-        Node node = head;
+        Node node = head.next;
 
-        while (node != null) {
+        while (node != head) {
             if (node.value == _value) {
                 nodes.add(node);
             }
@@ -55,7 +53,7 @@ public class ImprovedLinkedList {
     public boolean remove(int _value) {
         Node node = head.next;
 
-        while (!isNodeDummy(node) && node.value != _value) {
+        while (isNotNodeDummy(node) && node.value != _value) {
             node = node.next;
         }
 
@@ -73,7 +71,7 @@ public class ImprovedLinkedList {
     public void removeAll(int _value) {
         Node node = head.next;
 
-        while (!isNodeDummy(node)) {
+        while (isNotNodeDummy(node)) {
             if (node.value == _value) {
                 Node temp = node.next;
                 node.prev.next = temp;
@@ -87,8 +85,8 @@ public class ImprovedLinkedList {
     }
 
     public void clear() {
-        head.next = tail;
-        tail.prev = head;
+        head.next = head;
+        head.prev = head;
         size = 0;
     }
 
@@ -97,32 +95,31 @@ public class ImprovedLinkedList {
     }
 
     public void insertAfter(Node _nodeAfter, Node _nodeToInsert) {
-
         if (_nodeAfter == null) {
             _nodeToInsert.next = head.next;
             head.next.prev = _nodeToInsert;
             head.next = _nodeToInsert;
             _nodeToInsert.prev = head;
             size++;
-        }
+        } else {
+            Node after = head.next;
 
-        Node after = head.next;
+            while (isNotNodeDummy(after) && after != _nodeAfter) {
+                after = after.next;
+            }
 
-        while (!isNodeDummy(after) && after != _nodeAfter) {
-            after = after.next;
-        }
-
-        if (!isNodeDummy(after)) {
-            _nodeToInsert.next = after.next;
-            after.next.prev = _nodeToInsert;
-            after.next = _nodeToInsert;
-            _nodeToInsert.prev = after;
-            size++;
+            if (isNotNodeDummy(after)) {
+                _nodeToInsert.next = after.next;
+                after.next.prev = _nodeToInsert;
+                after.next = _nodeToInsert;
+                _nodeToInsert.prev = after;
+                size++;
+            }
         }
     }
 
-    private boolean isNodeDummy(Node node) {
-        return node instanceof DummyNode;
+    private boolean isNotNodeDummy(Node node) {
+        return !(node instanceof DummyNode);
     }
 }
 

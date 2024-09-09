@@ -20,7 +20,6 @@ class ImprovedLinkedListTest {
         ll.addInTail(node);
 
         assertEquals(node, ll.head.next);
-        assertEquals(node, ll.tail.prev);
     }
 
     @Test
@@ -39,7 +38,6 @@ class ImprovedLinkedListTest {
         assertEquals(node1, ll.head.next);
         assertEquals(node2, ll.head.next.next);
         assertEquals(node3, ll.head.next.next.next);
-        assertEquals(node4, ll.tail.prev);
     }
 
     @Test
@@ -47,15 +45,11 @@ class ImprovedLinkedListTest {
         initLongLinkedList2();
 
         Node nextHead = ll.head.next.next;
-        Node tail = ll.tail.prev;
 
         boolean removed = ll.remove(12);
 
         assertTrue(removed);
         assertEquals(nextHead, ll.head.next);
-        assertEquals(tail, ll.tail.prev);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
     }
 
     @Test
@@ -75,9 +69,7 @@ class ImprovedLinkedListTest {
 
         assertTrue(removed);
         assertEquals(ll.head.next.value, 12);
-        assertEquals(ll.tail.prev.value, 4);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev.value, 4);
     }
 
     @Test
@@ -88,9 +80,7 @@ class ImprovedLinkedListTest {
 
         assertTrue(removed);
         assertEquals(ll.head.next.value, 12);
-        assertEquals(ll.tail.prev.value, 32);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev.value, 32);
     }
 
     @Test
@@ -161,9 +151,7 @@ class ImprovedLinkedListTest {
 
         assertEquals(2, ll.count());
         assertEquals(5, ll.head.next.value);
-        assertEquals(17, ll.tail.prev.value);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(17, ll.head.prev.value);
     }
 
     @Test
@@ -181,9 +169,7 @@ class ImprovedLinkedListTest {
 
         assertEquals(2, ll.count());
         assertEquals(21, ll.head.next.value);
-        assertEquals(5, ll.tail.prev.value);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(5, ll.head.prev.value);
     }
 
     @Test
@@ -201,9 +187,7 @@ class ImprovedLinkedListTest {
 
         assertEquals(2, ll.count());
         assertEquals(21, ll.head.next.value);
-        assertEquals(17, ll.tail.prev.value);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(17, ll.head.prev.value);
     }
 
     @Test
@@ -223,9 +207,7 @@ class ImprovedLinkedListTest {
 
         assertEquals(3, ll.count());
         assertEquals(21, ll.head.next.value);
-        assertEquals(17, ll.tail.prev.value);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(17, ll.head.prev.value);
     }
 
     @Test
@@ -247,10 +229,8 @@ class ImprovedLinkedListTest {
 
         assertEquals(3, ll.count());
         assertEquals(21, ll.head.next.value);
-        assertEquals(17, ll.tail.prev.value);
+        assertEquals(17, ll.head.prev.value);
         assertNull(ll.find(5));
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
     }
 
     @Test
@@ -268,10 +248,8 @@ class ImprovedLinkedListTest {
 
         assertEquals(3, ll.count());
         assertEquals(21, ll.head.next.value);
-        assertEquals(17, ll.tail.prev.value);
+        assertEquals(17, ll.head.prev.value);
         assertNull(ll.find(5));
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
     }
 
     @Test
@@ -283,25 +261,21 @@ class ImprovedLinkedListTest {
 
         assertEquals(1, ll.count());
         assertEquals(ll.head.next, nodeToInsert);
-        assertEquals(ll.tail.prev, nodeToInsert);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev, nodeToInsert);
     }
 
     @Test
     void insertAfter_before_single_element_list() {
         ll = new ImprovedLinkedList();
         ll.addInTail(new Node(1));
-        Node tail = ll.tail.prev;
+        Node tail = ll.head.prev;
 
         Node nodeToInsert = new Node(5);
         ll.insertAfter(null, nodeToInsert);
 
         assertEquals(2, ll.count());
         assertEquals(ll.head.next, nodeToInsert);
-        assertEquals(ll.tail.prev, tail);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev, tail);
     }
 
     @Test
@@ -315,16 +289,14 @@ class ImprovedLinkedListTest {
 
         assertEquals(2, ll.count());
         assertEquals(ll.head.next, head);
-        assertEquals(ll.tail.prev, nodeToInsert);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev, nodeToInsert);
     }
 
     @Test
     void insertAfter_head_many_elements_list() {
         initLongLinkedList2();
         Node head = ll.head.next;
-        Node tail = ll.tail.prev;
+        Node tail = ll.head.prev;
         int size = ll.count();
 
         Node nodeToInsert = new Node(5);
@@ -332,9 +304,7 @@ class ImprovedLinkedListTest {
 
         assertEquals(size + 1, ll.count());
         assertEquals(ll.head.next, head);
-        assertEquals(ll.tail.prev, tail);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev, tail);
     }
 
     @Test
@@ -344,13 +314,11 @@ class ImprovedLinkedListTest {
         int size = ll.count();
 
         Node nodeToInsert = new Node(5);
-        ll.insertAfter(ll.tail.prev, nodeToInsert);
+        ll.insertAfter(ll.head.prev, nodeToInsert);
 
         assertEquals(size + 1, ll.count());
         assertEquals(ll.head.next, head);
-        assertEquals(ll.tail.prev, nodeToInsert);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev, nodeToInsert);
     }
 
     @Test
@@ -365,7 +333,7 @@ class ImprovedLinkedListTest {
         ll.addInTail(node3);
 
         Node head = ll.head.next;
-        Node tail = ll.tail.prev;
+        Node tail = ll.head.prev;
         int size = ll.count();
 
         Node nodeToInsert = new Node(5);
@@ -374,9 +342,7 @@ class ImprovedLinkedListTest {
         assertEquals(size + 1, ll.count());
         assertNotNull(ll.find(5));
         assertEquals(ll.head.next, head);
-        assertEquals(ll.tail.prev, tail);
-        assertNull(ll.head.prev);
-        assertNull(ll.tail.next);
+        assertEquals(ll.head.prev, tail);
     }
 
     private void initLongLinkedList2() {
