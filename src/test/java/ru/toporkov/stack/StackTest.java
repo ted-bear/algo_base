@@ -48,4 +48,68 @@ class StackTest {
         stack = new Stack<>();
         assertNull(stack.pop());
     }
+
+    @Test
+    void getMin_empty_stack() {
+        stack = new Stack<>();
+        assertNull(stack.getMin());
+    }
+
+    @Test
+    void getMin_single_element() {
+        stack = new Stack<>();
+        stack.push(2);
+        assertEquals(2, stack.getMin());
+    }
+
+    @Test
+    void getMin_single_negative_element() {
+        stack = new Stack<>();
+        stack.push(-2);
+        assertEquals(-2, stack.getMin());
+    }
+
+    @Test
+    void getMin_pair_elements() {
+        stack = new Stack<>();
+        stack.push(2);
+
+        assertEquals(2, stack.getMin());
+
+        stack.push(1);
+
+        assertEquals(1, stack.getMin());
+    }
+
+    @Test
+    void getMin_pair_elements_and_delete() {
+        stack = new Stack<>();
+        stack.push(2);
+
+        assertEquals(2, stack.getMin());
+
+        stack.push(1);
+
+        assertEquals(1, stack.getMin());
+
+        assertEquals(1, stack.pop());
+
+        assertEquals(2, stack.getMin());
+    }
+
+    @Test
+    void getMin_pair_neg_elements_and_delete() {
+        stack = new Stack<>();
+        stack.push(-2);
+
+        assertEquals(-2, stack.getMin());
+
+        stack.push(-1);
+
+        assertEquals(-2, stack.getMin());
+
+        assertEquals(-1, stack.pop());
+
+        assertEquals(-2, stack.getMin());
+    }
 }
