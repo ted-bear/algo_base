@@ -5,13 +5,15 @@ import java.util.List;
 
 public class Stack<T extends Comparable<T>> {
 
-    private List<T> list;
-    private List<T> minList;
+    private final List<T> list;
+    private final List<T> minList;
+    private Double sum;
     private int size;
 
     public Stack() {
         list = new LinkedList<>();
         minList = new LinkedList<>();
+        sum = 0.;
     }
 
     public int size() {
@@ -30,9 +32,16 @@ public class Stack<T extends Comparable<T>> {
     }
 
     public void push(T val) {
+        if (val instanceof java.lang.Number) {
+            sum += Double.parseDouble(val.toString());
+        }
         size++;
         list.add(val);
         updateMin(val);
+    }
+
+    public Double getMean() {
+        return size() == 0 ? null : sum / size();
     }
 
     public T peek() {

@@ -112,4 +112,39 @@ class StackTest {
 
         assertEquals(-2, stack.getMin());
     }
+
+    @Test
+    void getMean_pair_neg_elements_and_delete() {
+        stack = new Stack<>();
+        stack.push(-2);
+        stack.push(-1);
+
+        assertEquals(-1.5, stack.getMean());
+    }
+
+    @Test
+    void getMean_empty() {
+        stack = new Stack<>();
+
+        assertNull(stack.getMean());
+    }
+
+    @Test
+    void getMean_single_el() {
+        stack = new Stack<>();
+        stack.push(21);
+
+        assertEquals(21, stack.getMean());
+    }
+
+    @Test
+    void getMean_multiple_elements() {
+        stack = new Stack<>();
+
+        for (int i = 1; i < 11; i++) {
+            stack.push(i);
+        }
+
+        assertEquals(5.5, stack.getMean());
+    }
 }
