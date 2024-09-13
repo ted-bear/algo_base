@@ -137,12 +137,6 @@ class DynArrayTest {
 
         assertEquals(array.count, 1047);
         assertEquals(array.capacity, 2048);
-
-//        for (int i = 0; i < array.count; i++) {
-//            assertEquals(i + 2, array.getItem(i));
-//        }
-//
-//        assertEquals(defaultCapacity, array.capacity);
     }
 
     @Test
