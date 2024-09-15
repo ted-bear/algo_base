@@ -2,73 +2,71 @@ package ru.toporkov.dyn_array;
 
 public class MultiDimensionalArray<T> {
 
-    private static final int DEFAULT_DIMENSION_CAPACITY = 1;
-
-    public int dimensionCount;
-    private DynArray<T>[] array;
+    public int[] dimensions;
+    private Object[] array;
     private Class clazz;
 
-    public MultiDimensionalArray(Class clz) {
-        dimensionCount = DEFAULT_DIMENSION_CAPACITY;
+    public MultiDimensionalArray(Class clz, int... dimensions) {
         clazz = clz;
-        makeDimensionArray(DEFAULT_DIMENSION_CAPACITY);
+        array = makeDimensionArray(dimensions, 0);
+        this.dimensions = dimensions;
     }
 
-    public T getItem(int dimension, int index) {
-        validateIndex(dimension, index);
-        return array[dimension].getItem(index);
+    public T getItem(int position, int... index) {
+        DynArray<T> array = getArrayByIndex(index);
+        return array.getItem(position);
     }
 
-    public DynArray<T> getDimension(int dimension) {
-        return array[dimension];
+    public void append(T item, int... index) {
+        DynArray<T> arr = getArrayByIndex(index);
+        arr.append(item);
     }
 
-    public void addDimension() {
-        DynArray<T>[] temp = new DynArray[dimensionCount + 1];
+    public void insert(T item, int position, int... index) {
+        validateDimensionIndex(index);
+        DynArray<T> arr = getArrayByIndex(index);
 
-        System.arraycopy(array, 0, temp, 0, dimensionCount);
-
-        temp[dimensionCount] = new DynArray<>(clazz);
-        array = temp;
-        dimensionCount++;
+        arr.insert(item, position);
     }
 
-    public void append(int dimension, T itm) {
-        array[dimension].append(itm);
+    public void remove(int position, int... index) {
+        validateDimensionIndex(index);
+
+        DynArray<T> arr = getArrayByIndex(index);
+        arr.remove(position);
     }
 
-    public void insert(T itm, int dimension, int index) {
-        if (index > array[dimension].count || index < 0) {
-            throw new RuntimeException("Index cannot be less than 0 and more than array size");
+
+    public DynArray<T> getArrayByIndex(int[] index) {
+        Object[] current = array;
+
+        for (int i = 0; i < index.length - 1; i++) {
+            current = (Object[]) current[index[i]];
         }
 
-        validateDimension(dimension);
-        array[dimension].insert(itm, index);
+        return (DynArray<T>) current[index[index.length - 1]];
     }
 
-    public void remove(int dimension, int index) {
-        validateIndex(dimension, index);
-        array[dimension].remove(index);
-    }
-
-    private void makeDimensionArray(int dimension) {
-        array = new DynArray[dimension];
-
-        for (int i = 0; i < dimension; i++) {
-            array[i] = new DynArray<>(clazz);
-            ;
+    private void validateDimensionIndex(int[] index) {
+        for (int i = 0; i < index.length; i++) {
+            if (index[i] >= dimensions[i] || index[i] < 0) {
+                throw new RuntimeException("Index cannot be less than 0 and more than %d dimension size".formatted(i));
+            }
         }
     }
 
-    private void validateIndex(int dimension, int index) {
-        if (index >= array[dimension].count || index < 0) {
-            throw new RuntimeException("Index cannot be less than 0 and more than array size");
-        }
-    }
+    private Object[] makeDimensionArray(int[] dimensions, int depth) {
+        int size = dimensions[depth];
+        Object[] array = new Object[size];
 
-    private void validateDimension(int dimension) {
-        if (dimension >= dimensionCount || dimension < 0) {
-            throw new RuntimeException("Dimension cannot be less than 0 and more than dimensions");
+        for (int i = 0; i < size; i++) {
+            if (depth == dimensions.length - 1) {
+                array[i] = new DynArray<T>(clazz);
+            } else {
+                array[i] = makeDimensionArray(dimensions, depth + 1);
+            }
         }
+
+        return array;
     }
 }
