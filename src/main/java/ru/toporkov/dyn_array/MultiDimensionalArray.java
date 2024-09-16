@@ -1,5 +1,7 @@
 package ru.toporkov.dyn_array;
 
+import java.util.Arrays;
+
 public class MultiDimensionalArray<T> {
 
     public int[] dimensions;
@@ -12,7 +14,9 @@ public class MultiDimensionalArray<T> {
         this.dimensions = dimensions;
     }
 
-    public T getItem(int position, int... index) {
+    public T getItem(int... index) {
+        int position = index[index.length - 1];
+        index = Arrays.stream(index).limit(index.length - 1).toArray();
         DynArray<T> array = getArrayByIndex(index);
         return array.getItem(position);
     }
@@ -22,14 +26,18 @@ public class MultiDimensionalArray<T> {
         arr.append(item);
     }
 
-    public void insert(T item, int position, int... index) {
+    public void insert(T item, int... index) {
+        int position = index[index.length - 1];
+        index = Arrays.stream(index).limit(index.length - 1).toArray();
         validateDimensionIndex(index);
         DynArray<T> arr = getArrayByIndex(index);
 
         arr.insert(item, position);
     }
 
-    public void remove(int position, int... index) {
+    public void remove(int... index) {
+        int position = index[index.length - 1];
+        index = Arrays.stream(index).limit(index.length - 1).toArray();
         validateDimensionIndex(index);
 
         DynArray<T> arr = getArrayByIndex(index);
