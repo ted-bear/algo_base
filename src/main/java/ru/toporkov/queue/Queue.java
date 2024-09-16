@@ -28,4 +28,16 @@ public class Queue<T> {
     public int size() {
         return list.size();
     }
+
+    public void rotate(int n) {
+        if (n % size() == 0) {
+            return;
+        }
+
+        n = n % size();
+
+        for (int i = 0; i < n; i++) {
+            enqueue(dequeue());
+        }
+    }
 }
