@@ -2,6 +2,7 @@ package ru.toporkov.queue;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -83,5 +84,38 @@ class QueueTest {
         assertEquals(4, queue.dequeue());
         assertEquals(1, queue.dequeue());
         assertEquals(2, queue.dequeue());
+    }
+
+    @Test
+    void reverse_many_items() {
+        queue = new Queue<>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+        queue.enqueue(4);
+
+        queue.reverse();
+
+        assertEquals(4, queue.dequeue());
+        assertEquals(3, queue.dequeue());
+        assertEquals(2, queue.dequeue());
+        assertEquals(1, queue.dequeue());
+    }
+
+    @Test
+    void reverse_one_items() {
+        queue = new Queue<>();
+        queue.enqueue(1);
+
+        queue.reverse();
+
+        assertEquals(1, queue.dequeue());
+    }
+
+    @Test
+    void reverse_empty() {
+        queue = new Queue<>();
+
+        assertDoesNotThrow(() -> queue.reverse());
     }
 }

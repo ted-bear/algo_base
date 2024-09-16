@@ -2,6 +2,7 @@ package ru.toporkov.queue;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class Queue<T> {
 
@@ -38,6 +39,22 @@ public class Queue<T> {
 
         for (int i = 0; i < n; i++) {
             enqueue(dequeue());
+        }
+    }
+
+    public void reverse() {
+        if (size() <= 1) {
+            return;
+        }
+
+        Stack<T> stack = new Stack<>();
+
+        while (size() != 0) {
+            stack.push(dequeue());
+        }
+
+        while (!stack.empty()) {
+            enqueue(stack.pop());
         }
     }
 }
