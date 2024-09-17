@@ -74,4 +74,10 @@ class MultiDimensionalArrayTest {
 
         assertEquals(3, array.getArrayByIndex(new int[]{0, 0, 4}).count);
     }
+
+    @Test
+    void new_array_3_4_5() {
+        array = new MultiDimensionalArray<>(Integer.class, 3, 4, 5);
+
+    }
 }
