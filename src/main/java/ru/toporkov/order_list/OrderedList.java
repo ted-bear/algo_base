@@ -119,6 +119,7 @@ public class OrderedList<T> {
         _ascending = asc;
         head = null;
         tail = null;
+        size = 0;
     }
 
     public int count() {
