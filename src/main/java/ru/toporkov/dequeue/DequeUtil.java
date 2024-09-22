@@ -1,5 +1,8 @@
 package ru.toporkov.dequeue;
 
+import java.util.Map;
+import java.util.Set;
+
 public class DequeUtil {
 
     public static boolean isPalindrome(String input) {
@@ -20,5 +23,35 @@ public class DequeUtil {
         }
 
         return true;
+    }
+
+    public static boolean isBalanced(String input) {
+        Map<Character, Character> brackets = Map.of(
+                '(', ')',
+                '[', ']',
+                '{', '}'
+        );
+        Set<Character> closeBrackets = Set.of(')', ']', '}');
+        Deque<Character> deque = new Deque<>();
+
+        for (Character character : input.toCharArray()) {
+            if (brackets.containsKey(character)) {
+                deque.addTail(character);
+                continue;
+            }
+
+            if (closeBrackets.contains(character)) {
+                if (deque.size() == 0) {
+                    return false;
+                }
+
+                Character bracket = deque.removeTail();
+                if (!brackets.get(bracket).equals(character)) {
+                    return false;
+                }
+            }
+        }
+
+        return deque.size() == 0;
     }
 }
