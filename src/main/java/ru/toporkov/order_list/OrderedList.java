@@ -1,7 +1,6 @@
 package ru.toporkov.order_list;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 class Node<T> {
     public T value;
@@ -97,7 +96,7 @@ public class OrderedList<T> {
         }
 
         if (current == null) {
-            throw new NoSuchElementException("OrderedList do not contain element with value %s".formatted(val));
+            return;
         }
 
         if (size == 1) {
