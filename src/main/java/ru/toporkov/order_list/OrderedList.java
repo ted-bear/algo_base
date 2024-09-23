@@ -68,10 +68,12 @@ public class OrderedList<T> {
 
     private Node<T> findInAscending(T val) {
 
-        Node<T> current = head;
+        Node<T> current;
 
-        while (compare(current.value, val) < 0) {
-            current = current.next;
+        for (current = head;
+             compare(current.value, val) < 0;
+             current = current.next
+        ) {
         }
 
         return compare(current.value, val) == 0 ? current : null;
@@ -89,10 +91,12 @@ public class OrderedList<T> {
     }
 
     public void delete(T val) {
-        Node<T> current = head;
+        Node<T> current;
 
-        while (current != null && compare(current.value, val) != 0) {
-            current = current.next;
+        for (current = head;
+             current != null && compare(current.value, val) != 0;
+             current = current.next
+        ) {
         }
 
         if (current == null) {
@@ -143,10 +147,12 @@ public class OrderedList<T> {
             return;
         }
 
-        Node<T> current = head;
+        Node<T> current;
 
-        while (current != null && compare(current.value, value.value) < 0) {
-            current = current.next;
+        for (current = head;
+             current != null && compare(current.value, value.value) < 0;
+             current = current.next
+        ) {
         }
 
         if (current == null) {
@@ -172,10 +178,12 @@ public class OrderedList<T> {
             return;
         }
 
-        Node<T> current = tail;
+        Node<T> current;
 
-        while (current != null && compare(current.value, value.value) < 0) {
-            current = current.prev;
+        for (current = tail;
+             current != null && compare(current.value, value.value) < 0;
+             current = current.prev
+        ) {
         }
 
         if (current == null) {
