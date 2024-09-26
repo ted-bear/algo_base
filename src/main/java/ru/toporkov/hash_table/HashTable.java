@@ -1,5 +1,7 @@
 package ru.toporkov.hash_table;
 
+import java.util.Objects;
+
 public class HashTable {
     public String[] slots;
     private int size;
@@ -50,7 +52,7 @@ public class HashTable {
         int firstIndex = hashFun(value);
         int index = firstIndex;
 
-        while (!slots[index].equals(value)) {
+        while (!Objects.equals(slots[index], value)) {
             if (index < firstIndex && index + step >= firstIndex) {
                 return -1;
             }
