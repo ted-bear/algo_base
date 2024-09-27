@@ -21,21 +21,28 @@ public class HashTable {
 
     public int seekSlot(String value) {
         int firstIndex = hashFun(value);
-        int index = firstIndex;
-        boolean isRound = false;
+
+        if (slots[firstIndex] == null) {
+            return firstIndex;
+        }
+
+        int index = getIndex(firstIndex);
 
         while (slots[index] != null) {
-            if (index < firstIndex && index + step >= firstIndex || isRound && index == firstIndex) {
+            if (index <= firstIndex && index + step >= firstIndex) {
                 return -1;
             }
 
-            isRound = index + step >= size;
-            index = index + step < size ?
-                    index + step :
-                    (index + step) % size;
+            index = getIndex(index);
         }
 
         return index;
+    }
+
+    private int getIndex(int index) {
+        return index + step < size ?
+                index + step :
+                (index + step) % size;
     }
 
     public int put(String value) {
@@ -59,9 +66,7 @@ public class HashTable {
                 return -1;
             }
 
-            index = index + step < size ?
-                    index + step :
-                    (index + step) % size;
+            index = getIndex(index);
         }
 
 
