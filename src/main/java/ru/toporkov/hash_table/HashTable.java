@@ -22,12 +22,14 @@ public class HashTable {
     public int seekSlot(String value) {
         int firstIndex = hashFun(value);
         int index = firstIndex;
+        boolean isRound = false;
 
         while (slots[index] != null) {
-            if (index < firstIndex && index + step >= firstIndex) {
+            if (index < firstIndex && index + step >= firstIndex || isRound && index == firstIndex) {
                 return -1;
             }
 
+            isRound = index + step >= size;
             index = index + step < size ?
                     index + step :
                     (index + step) % size;
