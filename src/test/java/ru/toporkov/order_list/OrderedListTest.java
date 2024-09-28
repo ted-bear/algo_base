@@ -235,4 +235,110 @@ class OrderedListTest {
         assertNull(list.tail);
         assertEquals(0, list.count());
     }
+
+    @Test
+    void removeDuplicates_from_empty() {
+        list = new OrderedList<>(true);
+
+        list.removeDuplicates();
+
+        assertEquals(0, list.count());
+        assertNull(list.head);
+    }
+
+    @Test
+    void removeDuplicates_from_asc_single_el_list() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.removeDuplicates();
+
+        assertEquals(1, list.count());
+        assertEquals(2, list.head.value);
+    }
+
+    @Test
+    void removeDuplicates_from_asc_pair_el_list() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.removeDuplicates();
+
+        assertEquals(1, list.count());
+        assertEquals(2, list.tail.value);
+        assertEquals(list.head, list.tail);
+    }
+
+    @Test
+    void removeDuplicates_from_asc_three_el_list() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.add(2);
+        list.removeDuplicates();
+
+        assertEquals(1, list.count());
+        assertEquals(2, list.tail.value);
+        assertEquals(list.head, list.tail);
+    }
+
+    @Test
+    void removeDuplicates_from_tail_asc() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.add(1);
+        list.removeDuplicates();
+
+        assertEquals(2, list.count());
+        assertEquals(1, list.head.value);
+        assertEquals(2, list.tail.value);
+    }
+
+    @Test
+    void removeDuplicates_from_head_asc() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.removeDuplicates();
+
+        assertEquals(2, list.count());
+        assertEquals(1, list.head.value);
+        assertEquals(2, list.tail.value);
+    }
+
+    @Test
+    void removeDuplicates_without_dups() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(1);
+        list.removeDuplicates();
+
+        assertEquals(4, list.count());
+        assertEquals(1, list.head.value);
+        assertEquals(4, list.tail.value);
+    }
+
+    @Test
+    void removeDuplicates_with_every_el() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(4);
+        list.add(4);
+        list.add(1);
+        list.add(1);
+
+        list.removeDuplicates();
+
+        assertEquals(4, list.count());
+        assertEquals(1, list.head.value);
+        assertEquals(2, list.head.next.value);
+        assertEquals(3, list.tail.prev.value);
+        assertEquals(4, list.tail.value);
+    }
 }
