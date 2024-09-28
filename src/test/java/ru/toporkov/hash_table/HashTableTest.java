@@ -3,6 +3,7 @@ package ru.toporkov.hash_table;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HashTableTest {
 
@@ -63,6 +64,54 @@ class HashTableTest {
         assertEquals(0, hashTable.put("a"));
         assertEquals(0, hashTable.find("a"));
         assertEquals(-1, hashTable.find("b"));
+    }
+
+    @Test
+    void find_two_els_with_step_one() {
+        hashTable = new HashTable(2, 1);
+
+        assertEquals(1, hashTable.put("a"));
+        assertEquals(0, hashTable.put("b"));
+
+        assertEquals(0, hashTable.find("b"));
+        assertEquals(1, hashTable.find("a"));
+
+        assertEquals(-1, hashTable.find("t"));
+    }
+
+    @Test
+    void find_two_els_with_step_two() {
+        hashTable = new HashTable(2, 2);
+
+        assertEquals(1, hashTable.put("a"));
+        assertEquals(0, hashTable.put("b"));
+
+        assertEquals(0, hashTable.find("b"));
+        assertEquals(1, hashTable.find("a"));
+
+        assertEquals(-1, hashTable.find("t"));
+    }
+
+    @Test
+    void find_two_els_with_step_three() {
+        hashTable = new HashTable(2, 2);
+
+        assertEquals(1, hashTable.put("a"));
+        assertEquals(0, hashTable.put("b"));
+
+        assertEquals(0, hashTable.find("b"));
+        assertEquals(1, hashTable.find("a"));
+
+        assertEquals(-1, hashTable.find("t"));
+    }
+
+    @Test
+    void find_el_in_full_hashTable() {
+        hashTable = new HashTable(19, 1);
+
+        for (int i = 0; i < 19; i++) {
+            assertNotEquals(-1, hashTable.put(String.valueOf('a' + i)));
+        }
     }
 
     @Test
