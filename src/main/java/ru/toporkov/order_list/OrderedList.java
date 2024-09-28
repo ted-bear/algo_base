@@ -130,6 +130,32 @@ public class OrderedList<T> {
         return size;
     }
 
+    public void removeDuplicates() {
+        Node<T> first = head;
+        Node<T> last = head;
+
+        while (last != null) {
+            int countDups = 0;
+            while (last != null && first.value == last.value) {
+                last = last.next;
+                countDups++;
+            }
+
+            if (last == null) {
+                tail = first;
+                first.next = null;
+            }
+
+            if (last != null && last.prev != first) {
+                first.next = last;
+                last.prev = first;
+            }
+
+            size -= countDups - 1;
+            first = last;
+        }
+    }
+
     ArrayList<Node<T>> getAll() {
         ArrayList<Node<T>> r = new ArrayList<Node<T>>();
         Node<T> node = head;
