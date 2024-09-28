@@ -58,6 +58,14 @@ class HashTableTest {
     }
 
     @Test
+    void find_one_length_two_el() {
+        hashTable = new HashTable(1, 1);
+        assertEquals(0, hashTable.put("a"));
+        assertEquals(0, hashTable.find("a"));
+        assertEquals(-1, hashTable.find("b"));
+    }
+
+    @Test
     void find() {
         hashTable = new HashTable(19, 3);
         String value = "a";
@@ -73,5 +81,6 @@ class HashTableTest {
         assertEquals(1, hashTable.put("t"));
         assertEquals(-1, hashTable.put("t"));
         assertEquals(-1, hashTable.find("string"));
+        assertEquals(-1, hashTable.find("5"));
     }
 }

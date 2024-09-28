@@ -59,16 +59,20 @@ public class HashTable {
 
     public int find(String value) {
         int firstIndex = hashFun(value);
-        int index = firstIndex;
+
+        if (Objects.equals(slots[firstIndex], value)) {
+            return firstIndex;
+        }
+
+        int index = getIndex(firstIndex);
 
         while (!Objects.equals(slots[index], value)) {
-            if (index < firstIndex && index + step >= firstIndex) {
+            if (index <= firstIndex && index + step >= firstIndex) {
                 return -1;
             }
 
             index = getIndex(index);
         }
-
 
         return index;
     }
