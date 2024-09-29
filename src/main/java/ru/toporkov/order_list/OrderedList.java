@@ -66,28 +66,8 @@ public class OrderedList<T> {
         return _ascending ? findInAscending(val) : findInDescending(val);
     }
 
-    private Node<T> findInAscending(T val) {
-
-        Node<T> current;
-
-        for (current = head;
-             compare(current.value, val) < 0;
-             current = current.next
-        ) {
-        }
-
-        return compare(current.value, val) == 0 ? current : null;
-    }
-
-    private Node<T> findInDescending(T val) {
-
-        Node<T> current = head;
-
-        while (compare(current.value, val) > 0) {
-            current = current.next;
-        }
-
-        return compare(current.value, val) == 0 ? current : null;
+    public boolean is_ascending() {
+        return _ascending;
     }
 
     public void delete(T val) {
@@ -164,6 +144,30 @@ public class OrderedList<T> {
             node = node.next;
         }
         return r;
+    }
+
+    private Node<T> findInAscending(T val) {
+
+        Node<T> current;
+
+        for (current = head;
+             compare(current.value, val) < 0;
+             current = current.next
+        ) {
+        }
+
+        return compare(current.value, val) == 0 ? current : null;
+    }
+
+    private Node<T> findInDescending(T val) {
+
+        Node<T> current = head;
+
+        while (compare(current.value, val) > 0) {
+            current = current.next;
+        }
+
+        return compare(current.value, val) == 0 ? current : null;
     }
 
     private void addInAscendingOrder(Node<T> value) {
