@@ -25,7 +25,7 @@ class OrderedListUtilTest {
         OrderedList<Integer> first = new OrderedList<>(true);
         OrderedList<Integer> second = new OrderedList<>(true);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
 
         assertNull(merged.head);
         assertNull(merged.tail);
@@ -37,7 +37,17 @@ class OrderedListUtilTest {
         first.add(1);
         OrderedList<Integer> second = new OrderedList<>(true);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
+        assertEqualsArrayAndLinkedList(merged, new int[]{1});
+    }
+
+    @Test
+    void merge_toDesc_asc_oneEmptyAndOneSingleEl_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        OrderedList<Integer> second = new OrderedList<>(true);
+
+        var merged = mergeList(first, second, false);
         assertEqualsArrayAndLinkedList(merged, new int[]{1});
     }
 
@@ -47,7 +57,17 @@ class OrderedListUtilTest {
         first.add(1);
         OrderedList<Integer> second = new OrderedList<>(false);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
+        assertEqualsArrayAndLinkedList(merged, new int[]{1});
+    }
+
+    @Test
+    void merge_toDesc_diff_oneEmptyAndOneSingleEl_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        OrderedList<Integer> second = new OrderedList<>(false);
+
+        var merged = mergeList(first, second, false);
         assertEqualsArrayAndLinkedList(merged, new int[]{1});
     }
 
@@ -57,7 +77,17 @@ class OrderedListUtilTest {
         first.add(1);
         OrderedList<Integer> second = new OrderedList<>(false);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
+        assertEqualsArrayAndLinkedList(merged, new int[]{1});
+    }
+
+    @Test
+    void merge_toDesc_desc_oneEmptyAndOneSingleEl_lists() {
+        OrderedList<Integer> first = new OrderedList<>(false);
+        first.add(1);
+        OrderedList<Integer> second = new OrderedList<>(false);
+
+        var merged = mergeList(first, second, false);
         assertEqualsArrayAndLinkedList(merged, new int[]{1});
     }
 
@@ -68,8 +98,19 @@ class OrderedListUtilTest {
         OrderedList<Integer> second = new OrderedList<>(true);
         second.add(2);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2});
+    }
+
+    @Test
+    void merge_toDesc_twoAsc_singleEl_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        OrderedList<Integer> second = new OrderedList<>(true);
+        second.add(2);
+
+        var merged = mergeList(first, second, false);
+        assertEqualsArrayAndLinkedList(merged, new int[]{2, 1});
     }
 
     @Test
@@ -79,8 +120,19 @@ class OrderedListUtilTest {
         OrderedList<Integer> second = new OrderedList<>(false);
         second.add(2);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2});
+    }
+
+    @Test
+    void merge_toDesc_diff_singleEl_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        OrderedList<Integer> second = new OrderedList<>(false);
+        second.add(2);
+
+        var merged = mergeList(first, second, false);
+        assertEqualsArrayAndLinkedList(merged, new int[]{2, 1});
     }
 
     @Test
@@ -90,8 +142,19 @@ class OrderedListUtilTest {
         OrderedList<Integer> second = new OrderedList<>(false);
         second.add(2);
 
-        var merged = mergeList(first, second);
+        var merged = mergeList(first, second, true);
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2});
+    }
+
+    @Test
+    void merge_toDesc_desc_singleEl_lists() {
+        OrderedList<Integer> first = new OrderedList<>(false);
+        first.add(1);
+        OrderedList<Integer> second = new OrderedList<>(false);
+        second.add(2);
+
+        var merged = mergeList(first, second, false);
+        assertEqualsArrayAndLinkedList(merged, new int[]{2, 1});
     }
 
     @Test
@@ -108,9 +171,28 @@ class OrderedListUtilTest {
         second.add(9);
         second.add(10);
 
-        OrderedList<Integer> merged = mergeList(first, second);
+        OrderedList<Integer> merged = mergeList(first, second, true);
 
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2, 3, 4, 7, 8, 9, 10});
+    }
+
+    @Test
+    void merge_toDesc_twoAsc_eqLen_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        first.add(4);
+        first.add(7);
+        first.add(8);
+
+        OrderedList<Integer> second = new OrderedList<>(true);
+        second.add(2);
+        second.add(3);
+        second.add(9);
+        second.add(10);
+
+        OrderedList<Integer> merged = mergeList(first, second, false);
+
+        assertEqualsArrayAndLinkedList(merged, new int[]{10, 9, 8, 7, 4, 3, 2, 1});
     }
 
     @Test
@@ -127,9 +209,28 @@ class OrderedListUtilTest {
         second.add(9);
         second.add(10);
 
-        OrderedList<Integer> merged = mergeList(first, second);
+        OrderedList<Integer> merged = mergeList(first, second, true);
 
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2, 3, 4, 7, 8, 9, 10});
+    }
+
+    @Test
+    void merge_toDesc_diff_eqLen_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        first.add(4);
+        first.add(7);
+        first.add(8);
+
+        OrderedList<Integer> second = new OrderedList<>(false);
+        second.add(2);
+        second.add(3);
+        second.add(9);
+        second.add(10);
+
+        OrderedList<Integer> merged = mergeList(first, second, false);
+
+        assertEqualsArrayAndLinkedList(merged, new int[]{10, 9, 8, 7, 4, 3, 2, 1});
     }
 
     @Test
@@ -146,9 +247,28 @@ class OrderedListUtilTest {
         second.add(9);
         second.add(10);
 
-        OrderedList<Integer> merged = mergeList(first, second);
+        OrderedList<Integer> merged = mergeList(first, second, true);
 
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2, 3, 4, 7, 8, 9, 10});
+    }
+
+    @Test
+    void merge_toDesc_desc_eqLen_lists() {
+        OrderedList<Integer> first = new OrderedList<>(false);
+        first.add(1);
+        first.add(4);
+        first.add(7);
+        first.add(8);
+
+        OrderedList<Integer> second = new OrderedList<>(false);
+        second.add(2);
+        second.add(3);
+        second.add(9);
+        second.add(10);
+
+        OrderedList<Integer> merged = mergeList(first, second, false);
+
+        assertEqualsArrayAndLinkedList(merged, new int[]{10, 9, 8, 7, 4, 3, 2, 1});
     }
 
     @Test
@@ -164,8 +284,25 @@ class OrderedListUtilTest {
         second.add(3);
         second.add(9);
 
-        OrderedList<Integer> merged = mergeList(first, second);
+        OrderedList<Integer> merged = mergeList(first, second, true);
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2, 3, 4, 7, 8, 9});
+    }
+
+    @Test
+    void merge_toDesc_twoAsc_diffLen_lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        first.add(4);
+        first.add(7);
+        first.add(8);
+
+        OrderedList<Integer> second = new OrderedList<>(true);
+        second.add(2);
+        second.add(3);
+        second.add(9);
+
+        OrderedList<Integer> merged = mergeList(first, second, false);
+        assertEqualsArrayAndLinkedList(merged, new int[]{9, 8, 7, 4, 3, 2, 1});
     }
 
     @Test
@@ -181,8 +318,25 @@ class OrderedListUtilTest {
         second.add(3);
         second.add(9);
 
-        OrderedList<Integer> merged = mergeList(first, second);
+        OrderedList<Integer> merged = mergeList(first, second, true);
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2, 3, 4, 7, 8, 9});
+    }
+
+    @Test
+    void merge_toDesc_twoDiff__diffLen__lists() {
+        OrderedList<Integer> first = new OrderedList<>(true);
+        first.add(1);
+        first.add(4);
+        first.add(7);
+        first.add(8);
+
+        OrderedList<Integer> second = new OrderedList<>(false);
+        second.add(2);
+        second.add(3);
+        second.add(9);
+
+        OrderedList<Integer> merged = mergeList(first, second, false);
+        assertEqualsArrayAndLinkedList(merged, new int[]{9, 8, 7, 4, 3, 2, 1});
     }
 
     @Test
@@ -198,7 +352,24 @@ class OrderedListUtilTest {
         second.add(3);
         second.add(9);
 
-        OrderedList<Integer> merged = mergeList(first, second);
+        OrderedList<Integer> merged = mergeList(first, second, true);
         assertEqualsArrayAndLinkedList(merged, new int[]{1, 2, 3, 4, 7, 8, 9});
+    }
+
+    @Test
+    void merge_toDesc_two_desc_many_els_lists() {
+        OrderedList<Integer> first = new OrderedList<>(false);
+        first.add(1);
+        first.add(4);
+        first.add(7);
+        first.add(8);
+
+        OrderedList<Integer> second = new OrderedList<>(false);
+        second.add(2);
+        second.add(3);
+        second.add(9);
+
+        OrderedList<Integer> merged = mergeList(first, second, false);
+        assertEqualsArrayAndLinkedList(merged, new int[]{9, 8, 7, 4, 3, 2, 1});
     }
 }
