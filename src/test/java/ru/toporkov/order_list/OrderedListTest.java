@@ -444,6 +444,55 @@ class OrderedListTest {
         assertEquals(4, list.getMostFrequent());
     }
 
+    @Test
+    void getByValue_from_empty() {
+        list = createOrderedList(true, new int[]{});
+
+        assertEquals(-1, list.getByValue(1));
+    }
+
+    @Test
+    void getByValue_from_singleEqEl() {
+        list = createOrderedList(true, new int[]{1});
+
+        assertEquals(0, list.getByValue(1));
+    }
+
+    @Test
+    void getByValue_from_singleNotEqEl() {
+        list = createOrderedList(true, new int[]{2});
+
+        assertEquals(-1, list.getByValue(1));
+    }
+
+    @Test
+    void getByValue_from_pairWithEqEl() {
+        list = createOrderedList(true, new int[]{1, 2});
+
+        assertEquals(1, list.getByValue(2));
+    }
+
+    @Test
+    void getByValue_from_pairWithOutEqEl() {
+        list = createOrderedList(true, new int[]{1, 3});
+
+        assertEquals(-1, list.getByValue(2));
+    }
+
+    @Test
+    void getByValue_from_manyWithEqEl() {
+        list = createOrderedList(true, new int[]{1, 1, 2, 3, 4, 5, 3});
+
+        assertEquals(3, list.getByValue(3));
+    }
+
+    @Test
+    void getByValue_from_manyWithOutEqEl() {
+        list = createOrderedList(true, new int[]{1, 1, 2, 3, 4, 6, 3});
+
+        assertEquals(-1, list.getByValue(5));
+    }
+
     OrderedList<Integer> createOrderedList(boolean isAsc, int[] array) {
         OrderedList<Integer> list = new OrderedList<>(isAsc);
 

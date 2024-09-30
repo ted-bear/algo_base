@@ -1,6 +1,7 @@
 package ru.toporkov.order_list;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class Node<T> {
     public T value;
@@ -190,6 +191,27 @@ public class OrderedList<T> {
         }
 
         return curFrequency > maxFrequency ? start.value : mostFrequentEl;
+    }
+
+    public int getByValue(T value) {
+        List<Node<T>> list = getAll();
+        int start = 0;
+        int end = list.size() - 1;
+
+        while (start <= end) {
+            int middle = start + (end - start) / 2;
+            T midVal = list.get(middle).value;
+
+            if (compare(midVal, value) < 0) {
+                start = middle + 1;
+            } else if (compare(midVal, value) > 0) {
+                end = middle - 1;
+            } else {
+                return middle;
+            }
+        }
+
+        return -1;
     }
 
     ArrayList<Node<T>> getAll() {
