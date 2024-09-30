@@ -374,6 +374,76 @@ class OrderedListTest {
         assertFalse(list.isSubList(subList));
     }
 
+    @Test
+    void getMostFrequent_from_empty() {
+        list = createOrderedList(true, new int[]{});
+
+        assertNull(list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_from_singleElList() {
+        list = createOrderedList(true, new int[]{1});
+
+        assertEquals(1, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromEqPairEls() {
+        list = createOrderedList(true, new int[]{1, 1});
+
+        assertEquals(1, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromDiffPairEls() {
+        list = createOrderedList(true, new int[]{2, 1});
+
+        assertEquals(1, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromThreeEls() {
+        list = createOrderedList(true, new int[]{2, 2, 1});
+
+        assertEquals(2, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromThreeElsInHead() {
+        list = createOrderedList(true, new int[]{2, 1, 1});
+
+        assertEquals(1, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromThreeEqEls() {
+        list = createOrderedList(true, new int[]{1, 1, 1});
+
+        assertEquals(1, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromManyElsList_frequentInMiddle() {
+        list = createOrderedList(true, new int[]{1, 1, 2, 3, 4, 4, 4, 5, 6});
+
+        assertEquals(4, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromManyElsList_frequentInHead() {
+        list = createOrderedList(true, new int[]{1, 1, 1, 1, 2, 3, 4, 4, 4, 5, 6});
+
+        assertEquals(1, list.getMostFrequent());
+    }
+
+    @Test
+    void getMostFrequent_fromManyElsList_frequentInTail() {
+        list = createOrderedList(true, new int[]{1, 1, 2, 3, 4, 4, 4});
+
+        assertEquals(4, list.getMostFrequent());
+    }
+
     OrderedList<Integer> createOrderedList(boolean isAsc, int[] array) {
         OrderedList<Integer> list = new OrderedList<>(isAsc);
 

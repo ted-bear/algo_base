@@ -164,6 +164,34 @@ public class OrderedList<T> {
         return subListPtr == null;
     }
 
+    public T getMostFrequent() {
+        if (head == null) {
+            return null;
+        }
+
+        Node<T> start = head;
+        Node<T> end = head;
+        T mostFrequentEl = head.value;
+        int maxFrequency = 0;
+        int curFrequency = 0;
+
+        while (end != null) {
+            if (compare(start.value, end.value) != 0) {
+                if (curFrequency > maxFrequency) {
+                    maxFrequency = curFrequency;
+                    mostFrequentEl = start.value;
+                }
+                curFrequency = 0;
+                start = end;
+            } else {
+                end = end.next;
+                curFrequency++;
+            }
+        }
+
+        return curFrequency > maxFrequency ? start.value : mostFrequentEl;
+    }
+
     ArrayList<Node<T>> getAll() {
         ArrayList<Node<T>> r = new ArrayList<Node<T>>();
         Node<T> node = head;
