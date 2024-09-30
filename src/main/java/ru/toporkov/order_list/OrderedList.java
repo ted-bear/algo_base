@@ -136,6 +136,34 @@ public class OrderedList<T> {
         }
     }
 
+    public boolean isSubList(OrderedList<T> subList) {
+
+        if (subList.head == null) {
+            return true;
+        }
+
+        Node<T> listPtr = head;
+        Node<T> subListPtr = subList.head;
+
+        while (listPtr != null && listPtr.value != subListPtr.value) {
+            listPtr = listPtr.next;
+        }
+
+        if (listPtr == null) {
+            return false;
+        }
+
+        while (subListPtr != null && listPtr != null) {
+            if (compare(listPtr.value, subListPtr.value) != 0) {
+                return false;
+            }
+            subListPtr = subListPtr.next;
+            listPtr = listPtr.next;
+        }
+
+        return subListPtr == null;
+    }
+
     ArrayList<Node<T>> getAll() {
         ArrayList<Node<T>> r = new ArrayList<Node<T>>();
         Node<T> node = head;

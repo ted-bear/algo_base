@@ -3,7 +3,9 @@ package ru.toporkov.order_list;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OrderedListTest {
 
@@ -340,5 +342,210 @@ class OrderedListTest {
         assertEquals(2, list.head.next.value);
         assertEquals(3, list.tail.prev.value);
         assertEquals(4, list.tail.value);
+    }
+
+    @Test
+    void isSubList_emptyInputList() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+
+        assertTrue(list.isSubList(new OrderedList<>(true)));
+    }
+
+    @Test
+    void isSubList_singleSubListEl_positive() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(2);
+
+        assertTrue(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_singleSubListEl_negative() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(1);
+
+        assertFalse(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_singleListEl_singleSubListEl_positive() {
+        list = new OrderedList<>(true);
+        list.add(2);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(2);
+
+        assertTrue(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_singleListEl_singleSubListEl_negative() {
+        list = new OrderedList<>(true);
+        list.add(2);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(1);
+
+        assertFalse(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_pairEl_pairSubListEl_positive() {
+        list = new OrderedList<>(true);
+        list.add(2);
+        list.add(2);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(2);
+        subList.add(2);
+
+        assertTrue(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_pairEl_pairSubListEl_negative() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(2);
+        subList.add(2);
+
+        assertFalse(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_manyEls_singleSubListEl_positive() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(3);
+
+        assertTrue(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_manyEls_singleSubListEl_negative() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(4);
+
+        assertFalse(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_manyEls_manySubListEl_positive() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(2);
+        subList.add(3);
+        subList.add(6);
+
+        assertTrue(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_manyEls_manySubListEl_negative() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(4);
+        subList.add(3);
+        subList.add(6);
+
+        assertFalse(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_manyEls_manySubListEls_negative() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+        list.add(8);
+        list.add(9);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(1);
+        subList.add(4);
+        subList.add(6);
+
+        assertFalse(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_eqLength_positive() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(1);
+        subList.add(2);
+        subList.add(3);
+        subList.add(6);
+
+        assertTrue(list.isSubList(subList));
+    }
+
+    @Test
+    void isSubList_eqLength_negative() {
+        list = new OrderedList<>(true);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(6);
+
+        var subList = new OrderedList<Integer>(true);
+        subList.add(2);
+        subList.add(2);
+        subList.add(3);
+        subList.add(6);
+
+        assertFalse(list.isSubList(subList));
     }
 }
