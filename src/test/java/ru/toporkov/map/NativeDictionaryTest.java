@@ -59,7 +59,8 @@ class NativeDictionaryTest {
     void put_into_empty_oneLen_dict() {
         dictionary = createDictionary(1, 1);
 
-        assertTrue(dictionary.isKey("key0"));
+
+        assertTrue(dictionary.isKey("key2"));
     }
 
     @Test
@@ -71,13 +72,13 @@ class NativeDictionaryTest {
 
     @Test
     void get_from_empty() {
-        dictionary = createDictionary(31, 0);
+        dictionary = createDictionary(1, 0);
         assertNull(dictionary.get("key1"));
     }
 
     @Test
     void get_from_one_len() {
-        dictionary = createDictionary(31, 1);
+        dictionary = createDictionary(1, 1);
         assertEquals(0, dictionary.get("key0"));
     }
 

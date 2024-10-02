@@ -62,14 +62,19 @@ public class NativeDictionary<T> {
     }
 
     private int seekSlot(String key) {
-        int index = hashFun(key);
+        int firstIndex = hashFun(key);
 
-        if (slots[index] == null) {
-            return index;
+        if (slots[firstIndex] == null) {
+            return firstIndex;
         }
 
-        while (slots[index] != null) {
-            index = index == size - 1 ? 0 : index + 1;
+        int index = getIndex(firstIndex);
+
+        while (index != firstIndex) {
+            if (slots[index] == null) {
+                return index;
+            }
+            index = getIndex(index);
         }
 
         return index;
