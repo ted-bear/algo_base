@@ -2,7 +2,9 @@ package ru.toporkov.map;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NativeDictionaryTest {
@@ -70,6 +72,25 @@ class NativeDictionaryTest {
     @Test
     void get_from_empty() {
         dictionary = createDictionary(31, 0);
+        assertNull(dictionary.get("key1"));
+    }
+
+    @Test
+    void get_from_one_len() {
+        dictionary = createDictionary(31, 1);
+        assertEquals(0, dictionary.get("key0"));
+    }
+
+    @Test
+    void get_from_one_len_not_eq_el() {
+        dictionary = createDictionary(31, 1);
+        assertNull(dictionary.get("key1"));
+    }
+
+    @Test
+    void get_from_manyEl_notNull() {
+        dictionary = createDictionary(31, 19);
+        assertEquals(18, dictionary.get("key18"));
     }
 
     NativeDictionary<Integer> createDictionary(int size, int countElements) {

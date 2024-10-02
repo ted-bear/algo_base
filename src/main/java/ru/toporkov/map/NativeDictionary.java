@@ -53,11 +53,12 @@ public class NativeDictionary<T> {
 
         int index = getIndex(firstIndex);
 
-        while (!Objects.equals(slots[index], key)) {
+        while (index != firstIndex) {
+            if (Objects.equals(slots[index], key)) return values[index];
             index = getIndex(index);
         }
 
-        return values[index];
+        return null;
     }
 
     private int seekSlot(String key) {
