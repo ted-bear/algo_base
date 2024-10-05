@@ -22,10 +22,10 @@ class HashTableTest {
         hashTable = new HashTable(19, 3);
         String value = "a";
 
-        assertEquals(2, hashTable.put(value));
-        assertEquals(3, hashTable.put("b"));
-        assertEquals(4, hashTable.put("c"));
-        assertEquals(5, hashTable.put("t"));
+        assertNotEquals(-1, hashTable.put(value));
+        assertNotEquals(-1, hashTable.put("b"));
+        assertNotEquals(-1, hashTable.put("c"));
+        assertNotEquals(-1, hashTable.put("t"));
     }
 
     @Test
@@ -112,6 +112,19 @@ class HashTableTest {
         for (int i = 0; i < 19; i++) {
             assertNotEquals(-1, hashTable.put(String.valueOf('a' + i)));
         }
+    }
+
+    @Test
+    void ddos_on_hashTable() {
+        hashTable = new HashTable(19, 1);
+
+        for (int i = 0; i < 17; i++) {
+            String valToPut = String.valueOf((char) ('a' + 19 * i));
+            assertEquals(2 + i, hashTable.put(valToPut));
+        }
+
+        assertEquals(0, hashTable.put(String.valueOf((char) ('a' + 19 * 20))));
+        assertEquals(1, hashTable.put(String.valueOf((char) ('a' + 19 * 21))));
     }
 
     @Test

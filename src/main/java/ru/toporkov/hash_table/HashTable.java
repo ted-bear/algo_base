@@ -1,16 +1,20 @@
 package ru.toporkov.hash_table;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.Random;
 
 public class HashTable {
     public String[] slots;
     protected int size;
     protected int step;
+    private final String salt;
 
     public HashTable(int sz, int stp) {
         size = sz;
         step = stp;
         slots = new String[size];
+        salt = generateRandomString(7);
         for (int i = 0; i < size; i++) slots[i] = null;
     }
 
@@ -46,7 +50,8 @@ public class HashTable {
     }
 
     public int put(String value) {
-        int slotIndex = seekSlot(value);
+        String valueWithSalt = salt + value;
+        int slotIndex = seekSlot(valueWithSalt);
 
         if (slotIndex == -1) {
             return -1;
@@ -58,7 +63,8 @@ public class HashTable {
     }
 
     public int find(String value) {
-        int firstIndex = hashFun(value);
+        String valueWithSalt = salt + value;
+        int firstIndex = hashFun(valueWithSalt);
 
         if (Objects.equals(slots[firstIndex], value)) {
             return firstIndex;
@@ -75,5 +81,12 @@ public class HashTable {
         }
 
         return index;
+    }
+
+    private String generateRandomString(int length) {
+        byte[] bytes = new byte[length];
+        new Random().nextBytes(bytes);
+
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 }
