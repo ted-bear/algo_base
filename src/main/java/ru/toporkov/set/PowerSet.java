@@ -20,13 +20,10 @@ public class PowerSet {
     public void put(String value) {
         int index = binarySearch(storage, value);
 
-        if (index >= 0) {
-            return;
+        if (index < 0) {
+            int insertionPoint = index * -1 - 1;
+            storage.add(insertionPoint, value);
         }
-
-        int insertionPoint = index * -1 - 1;
-
-        storage.add(insertionPoint, value);
     }
 
     public boolean get(String value) {
@@ -49,7 +46,7 @@ public class PowerSet {
         PowerSet intersectionSet = new PowerSet();
 
         for (String el : set2.storage) {
-            if (!get(el)) {
+            if (get(el)) {
                 intersectionSet.put(el);
             }
         }
