@@ -71,8 +71,8 @@ public class PowerSet {
     public PowerSet difference(PowerSet set2) {
         PowerSet diffSet = new PowerSet();
 
-        for (String el : set2.storage) {
-            if (!get(el)) {
+        for (String el : storage) {
+            if (!set2.get(el)) {
                 diffSet.put(el);
             }
         }

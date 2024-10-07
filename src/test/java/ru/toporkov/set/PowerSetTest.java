@@ -405,8 +405,7 @@ class PowerSetTest {
         PowerSet diff = set.difference(set1);
 
         assertTrue(diff.get("a"));
-        assertTrue(diff.get("f"));
-        assertEquals(2, diff.size());
+        assertEquals(1, diff.size());
     }
 
     @Test
@@ -430,7 +429,6 @@ class PowerSetTest {
         PowerSet diff = set.difference(set1);
 
         assertTrue(diff.get("a"));
-        assertFalse(diff.get("f"));
         assertEquals(1, diff.size());
     }
 
@@ -443,8 +441,8 @@ class PowerSetTest {
         PowerSet diff = set.difference(set1);
 
         assertFalse(diff.get("a"));
-        assertTrue(diff.get("f"));
-        assertEquals(1, diff.size());
+        assertFalse(diff.get("f"));
+        assertEquals(0, diff.size());
     }
 
     @Test
@@ -457,8 +455,7 @@ class PowerSetTest {
         PowerSet diff = set.difference(set1);
 
         assertTrue(diff.get("a"));
-        assertTrue(diff.get("f"));
-        assertEquals(2, diff.size());
+        assertEquals(1, diff.size());
     }
 
     @Test
@@ -490,11 +487,8 @@ class PowerSetTest {
 
         assertTrue(diff.get("a"));
         assertTrue(diff.get("b"));
-        assertTrue(diff.get("f"));
         assertTrue(diff.get("c"));
-        assertTrue(diff.get("e"));
-        assertTrue(diff.get("d"));
-        assertEquals(6, diff.size());
+        assertEquals(3, diff.size());
     }
 
     @Test
@@ -511,8 +505,7 @@ class PowerSetTest {
         PowerSet diff = set.difference(set1);
 
         assertTrue(diff.get("b"));
-        assertTrue(diff.get("e"));
-        assertEquals(2, diff.size());
+        assertEquals(1, diff.size());
     }
 
     @Test
