@@ -211,7 +211,7 @@ public class OrderedList<T> {
             }
         }
 
-        return -1;
+        return -(start + 1);
     }
 
     ArrayList<Node<T>> getAll() {

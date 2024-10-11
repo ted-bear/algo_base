@@ -1,18 +1,19 @@
 package ru.toporkov.map;
 
+import ru.toporkov.order_list.OrderedList;
+
 import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class SortedKeyDictionary<T> {
 
     public int size;
-    public String[] slots;
+    public OrderedList<String> slots;
     public T[] values;
     private int length;
 
     public SortedKeyDictionary(int sz, Class clazz) {
         size = sz;
-        slots = new String[size];
+        slots = new OrderedList<>(true);
         length = 0;
         values = (T[]) Array.newInstance(clazz, this.size);
     }
@@ -26,9 +27,8 @@ public class SortedKeyDictionary<T> {
 
         length++;
         int positionToInsert = -1 * index - 1;
-        moveElementsRightByOne(slots, positionToInsert);
         moveElementsRightByOne(values, positionToInsert);
-        slots[positionToInsert] = key;
+        slots.add(key);
         values[positionToInsert] = value;
     }
 
@@ -44,17 +44,16 @@ public class SortedKeyDictionary<T> {
             return false;
         }
 
-        moveElementsLeftByOne(slots, index);
+        slots.delete(key);
         moveElementsLeftByOne(values, index);
         values[length - 1] = null;
-        slots[length - 1] = null;
         length--;
 
         return true;
     }
 
     private int getKeyIndex(String key) {
-        return Arrays.binarySearch(slots, 0, length, key);
+        return slots.getByValue(key);
     }
 
     private void moveElementsRightByOne(Object[] array, int positionToInsert) {
