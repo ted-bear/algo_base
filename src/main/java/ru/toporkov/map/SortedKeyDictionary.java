@@ -19,7 +19,7 @@ public class SortedKeyDictionary<T> {
     }
 
     public void put(String key, T value) {
-        int index = getKeyIndex(key);
+        int index = slots.getByValue(key);
 
         if (index >= 0 || length == size) {
             return;
@@ -33,12 +33,12 @@ public class SortedKeyDictionary<T> {
     }
 
     public T get(String key) {
-        int index = getKeyIndex(key);
+        int index = slots.getByValue(key);
         return (index < 0) ? null : values[index];
     }
 
     public boolean remove(String key) {
-        int index = getKeyIndex(key);
+        int index = slots.getByValue(key);
 
         if (index < 0) {
             return false;
@@ -50,10 +50,6 @@ public class SortedKeyDictionary<T> {
         length--;
 
         return true;
-    }
-
-    private int getKeyIndex(String key) {
-        return slots.getByValue(key);
     }
 
     private void moveElementsRightByOne(Object[] array, int positionToInsert) {
