@@ -722,4 +722,102 @@ class PowerSetTest {
         assertTrue(result.get("3:3"));
         assertEquals(5, result.size());
     }
+
+    @Test
+    void multiIntersection_one_elements_sets() {
+        set = new PowerSet();
+        set.put("1");
+
+        var set1 = new PowerSet();
+        set1.put("1");
+        set1.put("2");
+        set1.put("3");
+
+        var set2 = new PowerSet();
+        set2.put("1");
+
+        var set3 = new PowerSet();
+        set3.put("1");
+
+        PowerSet[] sets = {set1, set2, set3};
+
+        var result = set.multiIntersection(sets);
+
+        assertEquals(1, result.size());
+        assertTrue(result.get("1"));
+    }
+
+    @Test
+    void multiIntersection_one_empty_set() {
+        set = new PowerSet();
+        set.put("1");
+
+        var set1 = new PowerSet();
+        set1.put("1");
+        set1.put("2");
+        set1.put("3");
+
+        var set2 = new PowerSet();
+
+        var set3 = new PowerSet();
+        set3.put("1");
+
+        PowerSet[] sets = {set1, set2, set3};
+
+        var result = set.multiIntersection(sets);
+
+        assertEquals(0, result.size());
+        assertFalse(result.get("1"));
+    }
+
+    @Test
+    void multiIntersection_many_els_set() {
+        set = new PowerSet();
+        set.put("1");
+        set.put("2");
+
+        var set1 = new PowerSet();
+        set1.put("1");
+        set1.put("2");
+        set1.put("3");
+
+        var set2 = new PowerSet();
+        set2.put("1");
+        set2.put("2");
+
+        var set3 = new PowerSet();
+        set3.put("1");
+        set3.put("3");
+        set3.put("2");
+
+        PowerSet[] sets = {set1, set2, set3};
+
+        var result = set.multiIntersection(sets);
+
+        assertEquals(2, result.size());
+        assertTrue(result.get("1"));
+        assertTrue(result.get("2"));
+    }
+
+    @Test
+    void multiIntersection_a_hundred_sets() {
+        set = new PowerSet();
+        set.put("1");
+        set.put("2");
+
+        PowerSet[] sets = new PowerSet[100];
+
+        for (int i = 0; i < 100; i++) {
+            var tempSet = new PowerSet();
+            tempSet.put("1");
+            tempSet.put("2");
+            sets[i] = tempSet;
+        }
+
+        var result = set.multiIntersection(sets);
+
+        assertEquals(2, result.size());
+        assertTrue(result.get("1"));
+        assertTrue(result.get("2"));
+    }
 }

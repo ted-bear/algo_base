@@ -91,12 +91,6 @@ public class PowerSet {
         return true;
     }
 
-    /*
-     * 1 2
-     * 3 4
-     * 13 31 14 41 23 32 24 42
-     * */
-
     public PowerSet cartesianProduction(PowerSet set) {
         PowerSet result = new PowerSet();
 
@@ -118,6 +112,16 @@ public class PowerSet {
         }
 
         return result;
+    }
+
+    public PowerSet multiIntersection(PowerSet[] sets) {
+        PowerSet intersectionSet = intersection(sets[0]);
+
+        for (int i = 1; i < sets.length; i++) {
+            intersectionSet = intersectionSet.intersection(sets[i]);
+        }
+
+        return intersectionSet;
     }
 
     public boolean equals(PowerSet set2) {
