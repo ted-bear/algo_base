@@ -4,13 +4,13 @@ import java.lang.reflect.Array;
 
 public class BitsKeyDictionary<T> {
 
-    private final boolean[] slots;
+    private final int[] slots;
     private final T[] values;
     private final int size;
 
     public BitsKeyDictionary(int sz, Class clz) {
         size = sz;
-        slots = new boolean[sz];
+        slots = new int[sz];
         values = (T[]) Array.newInstance(clz, size);
         for (int i = 0; i < size; i++) values[i] = null;
     }
@@ -23,7 +23,7 @@ public class BitsKeyDictionary<T> {
         }
 
         int index = key.indexOf('1');
-        slots[index] = true;
+        slots[index] = 1;
         values[index] = value;
     }
 
@@ -47,7 +47,7 @@ public class BitsKeyDictionary<T> {
 
         int index = key.indexOf('1');
 
-        if (!slots[index]) {
+        if (slots[index] == 0) {
             return false;
         }
 
