@@ -657,4 +657,69 @@ class PowerSetTest {
 
         return newSet;
     }
+
+    @Test
+    void cartesianProduction_empty_sets() {
+        set = new PowerSet();
+        var prodSet = new PowerSet();
+
+        var result = set.cartesianProduction(prodSet);
+
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void cartesianProduction_single_and_empty_sets() {
+        set = new PowerSet();
+        set.put("string");
+        var prodSet = new PowerSet();
+
+        var result = set.cartesianProduction(prodSet);
+
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void cartesianProduction_empty_and_single_sets() {
+        set = new PowerSet();
+        var prodSet = new PowerSet();
+        prodSet.put("string");
+
+        var result = set.cartesianProduction(prodSet);
+
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void cartesianProduction_singles_sets() {
+        set = new PowerSet();
+        set.put("string1");
+        var prodSet = new PowerSet();
+        prodSet.put("string2");
+
+        var result = set.cartesianProduction(prodSet);
+
+        assertTrue(result.get("string1:string2"));
+        assertTrue(result.get("string2:string1"));
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void cartesianProduction_one_with_many_sets() {
+        set = new PowerSet();
+        set.put("1");
+        set.put("2");
+        set.put("3");
+        var prodSet = new PowerSet();
+        prodSet.put("3");
+
+        var result = set.cartesianProduction(prodSet);
+
+        assertTrue(result.get("1:3"));
+        assertTrue(result.get("3:1"));
+        assertTrue(result.get("2:3"));
+        assertTrue(result.get("3:2"));
+        assertTrue(result.get("3:3"));
+        assertEquals(5, result.size());
+    }
 }

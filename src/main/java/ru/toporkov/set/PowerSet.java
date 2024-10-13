@@ -91,6 +91,35 @@ public class PowerSet {
         return true;
     }
 
+    /*
+     * 1 2
+     * 3 4
+     * 13 31 14 41 23 32 24 42
+     * */
+
+    public PowerSet cartesianProduction(PowerSet set) {
+        PowerSet result = new PowerSet();
+
+        if (set.size() == 0) {
+            System.err.println("Second set has zero size");
+            return new PowerSet();
+        }
+
+        if (size() == 0) {
+            System.err.println("First set has zero size");
+            return new PowerSet();
+        }
+
+        for (String el1 : storage) {
+            for (String el2 : set.storage) {
+                result.put(el1 + ":" + el2);
+                result.put(el2 + ":" + el1);
+            }
+        }
+
+        return result;
+    }
+
     public boolean equals(PowerSet set2) {
         return storage.equals(set2.storage);
     }
