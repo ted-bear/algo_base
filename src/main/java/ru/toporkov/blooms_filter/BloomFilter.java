@@ -1,12 +1,18 @@
 package ru.toporkov.blooms_filter;
 
 public class BloomFilter {
-    public int filter_len;
+
+    private final int filter_len;
     private int bits;
 
     public BloomFilter(int f_len) {
         filter_len = f_len;
         bits = 0;
+    }
+
+    public BloomFilter(int f_len, int bits) {
+        filter_len = f_len;
+        this.bits = bits;
     }
 
     public int hash1(String str1) {
@@ -47,5 +53,13 @@ public class BloomFilter {
 
         return (bits & strHash1) >= strHash1 &&
                 (bits & strHash2) >= strHash2;
+    }
+
+    public int getBits() {
+        return bits;
+    }
+
+    public int getFilterLen() {
+        return filter_len;
     }
 }
