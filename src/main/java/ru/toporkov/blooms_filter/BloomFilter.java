@@ -2,8 +2,8 @@ package ru.toporkov.blooms_filter;
 
 public class BloomFilter {
 
-    private final int filter_len;
-    private int bits;
+    protected final int filter_len;
+    protected int bits;
 
     public BloomFilter(int f_len) {
         filter_len = f_len;
