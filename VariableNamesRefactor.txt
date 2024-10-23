@@ -1,0 +1,59 @@
+######### 6.1 #########
+1.
+    public class DynArray<T> {
+        ...
+        Class clazzOfElements; // before: clazz
+        ...
+    }
+
+2. min_value => min_depth_of_log // log is an object from geology
+
+3. mean_val => mean_clay_porosity
+
+4. docs = [] => docs_from_es_index
+
+5. data => data_from_request
+
+
+######### 6.2 #########
+
+1. int elementHash = object.hashCode();
+2. var listenableFuture = threadPoolExecutor.submit(task);
+3. var fileVisitor = new SimpleFileVisitor<Path>();
+4. var httpServletRequest = requestAttributes.getRequest();
+
+######### 6.3 #########
+1.
+public class RequestAddr {
+    private String index;
+    private String region;
+    private String city;
+    private String street;
+    private String houseNumber
+    private String okato;
+}
+
+2.
+public class Document {
+    String subject;
+    String author;
+    byte[] file;
+}
+
+3.
+public class FtpDownloadRequest {
+
+    private final String host;
+    private final int port;
+    private final String username;
+    private final String password;
+    private final String address;
+}
+
+
+######### 6.4 #########
+1. item => iteratedItem
+2. reader => fileReader
+3. date => creationDate
+4. images => allImagesFromPatent
+5. x => points_on_x_axis
