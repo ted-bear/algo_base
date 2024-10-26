@@ -1,0 +1,103 @@
+######### 7.1 #########
+1. auto -> isAuto (Авто отправка сообщений)
+2. New -> isNewRequest (Существовал ли уже такой запрос в БД)
+3. readOnly -> isReadOnly (Проверка поля на возможность его изменения)
+4. tail -> isTail (Проверка, что узел является последним)
+5. _ascending -> isAscending (возрастающая ли последовательность)
+
+######### 7.2 #########
+1. boolean found = requestNotificationService
+               .selectOne(em, new EqualFilter("request", request))
+               .isPresent();
+
+2. boolean envValueFound = envValue != null;
+   boolean propValueFound = propValue != null;
+
+   if (envValueFound) {
+       logger.atInfo()
+           .addKeyValue("envValue", envValue)
+           .log("Значение переменной окружения найдено и оно приоритетнее чем значение из файла");
+       return envValue;
+   }
+
+   if (!propValueFound) {
+       logger.atError()
+           .addKeyValue("propName", propName)
+           .log("Отсутствует значение для переменной");
+       logger.atInfo()
+           .addKeyValue("propName", propName)
+           .addKeyValue("propertiesFilename", propertiesFilename)
+           .addKeyValue("propName", propName)
+           .log("Задайте значение в файле, либо установите значение для переменной окружения");
+   }
+
+3. boolean foundGarAddress = CollectionUtils.isNotEmpty(garAddressList);
+
+4.  boolean loginSuccess = user != null
+    if (loginSuccess) {
+        ...
+    } else {
+        ...
+    }
+
+
+######### 7.3 #########
+1. Итератор обозначает количество прочитанных значений из потока:
+for (
+    int count = 0;
+    (count = inputStream.read(buffer, 0, 1024)) != -1;
+) {
+    fos.write(buffer, 0, count);
+}
+
+2. Итерирование по пикселям картинки:
+for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+
+    }
+}
+
+
+######### 7.4 #########
+1. При использовании паттерна алгоритмов плавающее окно/два указателя: first & last
+2. При использовании быстрого и медленного указателей: slow & fast
+
+
+######### 7.5 #########
+1. Было:
+    int sum = firstNode.value + secondNode.value;
+    linkedList.addInTail(new Node(sum));
+   Стало:
+    linkedList.addInTail(
+        new Node(firstNode.value + secondNode.value)
+    );
+
+2. Было:
+    public void add(T value) {
+       Node<T> node = new Node<>(value);
+       ....
+    }
+
+   Стало:
+    public void add(T value) {
+       Node<T> nodeToAdd = new Node<>(value);
+       ....
+    }
+
+3. Было:
+    private int hashFun(String key) {
+        int charSum = Math.abs(key.hashCode());
+        return charSum % size;
+    }
+
+   Стало:
+   private int hashFun(String key) {
+       return Math.abs(key.hashCode()) % size;
+   }
+
+4. Было
+    Setting setting = event.getSetting();
+    String key = setting.getKey();
+   Стало:
+    Setting savedSetting = event.getSetting();
+    String savedSettingKey = savedSetting.getKey();
