@@ -24,23 +24,26 @@ public class HashTable {
     }
 
     public int seekSlot(String value) {
-        int firstIndex = hashFun(value);
+        int firstIndexToInsert = hashFun(value);
 
-        if (slots[firstIndex] == null) {
-            return firstIndex;
+        if (slots[firstIndexToInsert] == null) {
+            return firstIndexToInsert;
         }
 
-        int index = getIndex(firstIndex);
+        int nextIndexToInsert = getIndex(firstIndexToInsert);
 
-        while (slots[index] != null) {
-            if (index <= firstIndex && index + step >= firstIndex) {
+        while (slots[nextIndexToInsert] != null) {
+            if (
+                    nextIndexToInsert <= firstIndexToInsert &&
+                            nextIndexToInsert + step >= firstIndexToInsert
+            ) {
                 return -1;
             }
 
-            index = getIndex(index);
+            nextIndexToInsert = getIndex(nextIndexToInsert);
         }
 
-        return index;
+        return nextIndexToInsert;
     }
 
     private int getIndex(int index) {

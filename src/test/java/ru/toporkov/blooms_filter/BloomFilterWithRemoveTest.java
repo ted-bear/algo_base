@@ -3,6 +3,7 @@ package ru.toporkov.blooms_filter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class BloomFilterWithRemoveTest {
@@ -26,5 +27,15 @@ class BloomFilterWithRemoveTest {
         filter.remove("str");
 
         assertNotEquals(0, filter.getBits());
+    }
+
+    @Test
+    void remove_one_element_single_char_el() {
+        BloomFilterWithRemove filter = new BloomFilterWithRemove(111);
+        filter.add("a");
+        filter.remove("@");
+
+        assertNotEquals(0, filter.getBits());
+        assertFalse(filter.isValue("a"));
     }
 }

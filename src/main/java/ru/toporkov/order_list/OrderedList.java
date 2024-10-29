@@ -17,13 +17,13 @@ class Node<T> {
 public class OrderedList<T> {
     public Node<T> head, tail;
     private int size;
-    private boolean _ascending;
+    private boolean isAscending;
 
     public OrderedList(boolean asc) {
         head = null;
         tail = null;
         size = 0;
-        _ascending = asc;
+        isAscending = asc;
     }
 
     public int compare(T v1, T v2) {
@@ -51,7 +51,7 @@ public class OrderedList<T> {
 
     public void add(T value) {
         Node<T> nodeToAdd = new Node<>(value);
-        if (_ascending) {
+        if (isAscending) {
             addInAscendingOrder(nodeToAdd);
         } else {
             addInDescendingOrder(nodeToAdd);
@@ -64,11 +64,11 @@ public class OrderedList<T> {
             return null;
         }
 
-        return _ascending ? findInAscending(val) : findInDescending(val);
+        return isAscending ? findInAscending(val) : findInDescending(val);
     }
 
-    public boolean is_ascending() {
-        return _ascending;
+    public boolean isAscending() {
+        return isAscending;
     }
 
     public void delete(T val) {
@@ -101,7 +101,7 @@ public class OrderedList<T> {
     }
 
     public void clear(boolean asc) {
-        _ascending = asc;
+        isAscending = asc;
         head = null;
         tail = null;
         size = 0;

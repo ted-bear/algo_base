@@ -25,8 +25,8 @@ public class DynamicHashTable extends HashTable {
     }
 
     private void checkIfNeedToExpand() {
-        long count = Arrays.stream(slots).filter(Objects::nonNull).count();
-        if (4 * count > 3L * size) {
+        long countOfNotNullElements = Arrays.stream(slots).filter(Objects::nonNull).count();
+        if (4 * countOfNotNullElements > 3L * size) {
             expand();
         }
     }

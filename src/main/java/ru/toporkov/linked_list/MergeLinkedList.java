@@ -2,18 +2,19 @@ package ru.toporkov.linked_list;
 
 public class MergeLinkedList {
 
-    LinkedList merge(LinkedList ll1, LinkedList ll2) {
-        if (ll1.count() != ll2.count()) {
+    LinkedList merge(LinkedList firstListToMerge, LinkedList secondListToMerge) {
+        if (firstListToMerge.count() != secondListToMerge.count()) {
             return null;
         }
 
         LinkedList linkedList = new LinkedList();
-        Node firstNode = ll1.head;
-        Node secondNode = ll2.head;
+        Node firstNode = firstListToMerge.head;
+        Node secondNode = secondListToMerge.head;
 
         while (firstNode != null) {
-            int sum = firstNode.value + secondNode.value;
-            linkedList.addInTail(new Node(sum));
+            linkedList.addInTail(
+                    new Node(firstNode.value + secondNode.value)
+            );
             firstNode = firstNode.next;
             secondNode = secondNode.next;
         }

@@ -61,7 +61,8 @@ public class LinkedList {
         // First element is equal value
         if (node.value == _value) {
             head = node.next;
-            if (tail == node) {
+            boolean isTail = tail == node;
+            if (isTail) {
                 tail = node.next;
             }
             size--;

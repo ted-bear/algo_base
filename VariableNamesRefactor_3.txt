@@ -1,0 +1,148 @@
+######### 8 #########
+
+1. Было:
+    public static LinkedList merge(LinkedList list1, LinkedList list2) {
+            sort(list1);
+            sort(list2);
+            ...
+    }
+
+   Стало:
+    public static LinkedList merge(LinkedList firstList, LinkedList secondList) {
+            sort(firstList);
+            sort(secondList);
+            ...
+    }
+
+2. Было (length зарезервированная переменная у массивов):
+    private String generateRandomString(int length) {
+            byte[] bytes = new byte[length];
+            new Random().nextBytes(bytes);
+            return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+   Стало:
+       private String generateRandomString(int stringLength) {
+           byte[] bytes = new byte[stringLength];
+           new Random().nextBytes(bytes);
+           return new String(bytes, StandardCharsets.UTF_8);
+       }
+
+
+3. Было (length зарезервированная переменная у массивов):
+    private String generateRandomString(int length) {
+            byte[] bytes = new byte[length];
+            new Random().nextBytes(bytes);
+            return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+   Стало:
+       private String generateRandomString(int stringLength) {
+           byte[] bytes = new byte[stringLength];
+           new Random().nextBytes(bytes);
+           return new String(bytes, StandardCharsets.UTF_8);
+       }
+
+4. Было:
+    List<Future<?>> futures = new ArrayList<>();
+
+    for (CrawledPatent crawledPatent : crawledPatents) {
+        futures.add(executorService.submit(() -> removeCrawledPatent(crawledPatent)));
+    }
+
+   Стало:
+    List<Future<?>> removePatentJobs = new ArrayList<>();
+
+    for (CrawledPatent crawledPatent : crawledPatents) {
+        removePatentJobs.add(executorService.submit(() -> removeCrawledPatent(crawledPatent)));
+    }
+
+5. Было:
+    StopWatch stopWatch = new StopWatch(String.format("re unify %s", crawledPatentId));
+    stopWatch.start("restore files");
+    ...
+    stopWatch.stop();
+   Стало:
+    StopWatch stopWatchNanos = new StopWatch(String.format("re unify %s", crawledPatentId));
+    stopWatchNanos.start("restore files");
+    ...
+    stopWatchNanos.stop();
+
+6. Было:
+    int n;
+    while (IOUtils.EOF != (n = inputStream.read(buffer))) {}
+   Стало:
+    int readBytesCount;
+    while (IOUtils.EOF != (readBytesCount = inputStream.read(buffer))) {}
+
+7. Было:
+    ...
+    SSLSocketFactory result = sslContext.getSocketFactory();
+    return result;
+
+   Стало:
+    ...
+    SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+    return sslSocketFactory;
+
+8. Было:
+    String error = null;
+
+    if (!licOptional.isPresent()) {
+        error = "Услуга не может быть оказана: лицензия № " + licNumber.orElse("") + " не найдена в реестре";
+    } else if (licOptional.get().getStatus().getCode() != LicStatusCode.ACTIVE) {
+        error = "Услуга не может быть оказана: лицензия № " + licNumber.orElse("") + "  не действует";
+    }
+   Стало:
+    String errorMessage = null;
+
+    if (!licOptional.isPresent()) {
+        errorMessage = "...";
+    } else if (licOptional.get().getStatus().getCode() != LicStatusCode.ACTIVE) {
+        errorMessage = "...";
+    }
+
+9. Было:
+    if external:
+        data = send_to_external_api(request.full_path, payload)
+    else:
+        data = elasticsearch_service.get_paginated_records(pagination_url='/api/v1/logs',
+                                                           offset=offset,
+                                                           limit=limit,
+                                                           payload=payload)
+    return jsonify(data)
+
+   Стало:
+    if is_external:
+        logging_data = send_to_external_api(request.full_path, payload)
+    else:
+        logging_data = elasticsearch_service.get_paginated_records(pagination_url='/api/v1/logs',
+                                                           offset=offset,
+                                                           limit=limit,
+                                                           payload=payload)
+    return jsonify(logging_data)
+
+10. Было
+        s = Search(using=self._es, index=self._index_name)
+    Стало:
+        es_search_job = Search(using=self._es, index=self._index_name)
+
+11. Было
+        if app.config['DEBUG_MODE']:
+            start = timer()
+            result = func(*args, **kwargs)
+            end = timer()
+    Стало:
+        if app.config['DEBUG_MODE']:
+            start_sec = timer()
+            result = func(*args, **kwargs)
+            end_sec = timer()
+
+12. Было
+        public static Date max(Date date1, Date date2) {
+                return date1.after(date2) ? date1 : date2;
+        }
+    Стало:
+        public static Date max(Date firstDate, Date secondDate) {
+                return firstDate.after(secondDate) ? firstDate : secondDate;
+        }
