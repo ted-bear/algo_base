@@ -1,0 +1,33 @@
+######### 3.1 #########
+
+1.
+    Было: public class TermLic {}
+    Стало: public class TerminationLicense {}
+
+2.
+    Было: public class BankDynArray<T> {}
+    Стало: public class BankingMethodArray<T> {}
+
+3.
+    Было: public class MergeLinkedList {}
+    Стало: public class UtilLinkedList {}
+
+4.
+    Было: public class BloomFilterWithRemove extends BloomFilter {}
+    Стало: public class RemovingBloomFilter extends BloomFilter {}
+
+5.
+    Было: public enum Protocol {}
+    Стало: public enum FileTransportProtocolType {}
+
+######### 3.2 #########
+
+1. TerminationLicense => TerminationLicenseBusinessAction
+2. CreationNewLicense => CreationNewLicenseBusinessAction
+3. ChangeWorksLicense => ChangeWorksLicenseBusinessAction
+
+4. ChinaXmlWriter => ChinaMarshaller
+5. GreatBritainXmlWriter => GreatBritainMarshaller
+
+6. CrawledPatentData => CrawledPatentDto
+7. CrawledPatentFileRecord => CrawledPatentFileDto
