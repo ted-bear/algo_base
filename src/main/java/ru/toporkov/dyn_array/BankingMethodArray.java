@@ -2,7 +2,7 @@ package ru.toporkov.dyn_array;
 
 import java.lang.reflect.Array;
 
-public class BankDynArray<T> {
+public class BankingMethodArray<T> {
 
     private static final Integer DEFAULT_CAPACITY = 16;
 
@@ -12,7 +12,7 @@ public class BankDynArray<T> {
     public int operationsCount;
     Class clazz;
 
-    public BankDynArray(Class clz) {
+    public BankingMethodArray(Class clz) {
         clazz = clz;
         count = 0;
         operationsCount = 0;

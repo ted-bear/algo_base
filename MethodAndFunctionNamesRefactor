@@ -1,0 +1,84 @@
+######### 5 #########
+
+1. Функция для вывода на консоль календаря текущего месяца
+Было:
+    private static void currentCalendar() {}
+Стало:
+    private static void printCurrentMonthCalendar() {}
+
+
+2. Функция для скачивания объекта StoredFile по его Id полученному из объекта DownloadCrawledFileRequest
+Было:
+    public FileDto download(DownloadCrawledFileRequest request) {}
+Стало:
+    public FileDto downloadStoredFileById(DownloadCrawledFileRequest request) {}
+
+
+3. Функция для загрузки нового объекта StoredFile по Id DownloadCrawledFileRequest
+Было:
+    public FileDto upload(DownloadCrawledFileRequest request) {}
+Стало:
+    public FileDto uploadStoredFileById(DownloadCrawledFileRequest request) {}
+
+
+4. Функция получения байтов из файла
+Было:
+    private byte[] getBytes(MultipartFile file) {}
+Стало:
+    private byte[] getFileBytes(MultipartFile file) {}
+
+
+5. Функция для нахождения патентов и возврата pageable dto
+Было:
+    public DtoPage<CrawledPatentDto> find(FindCrawledPatentsRequest request) {}
+Стало:
+    public DtoPage<CrawledPatentDto> findPageable(FindCrawledPatentsRequest request) {}
+
+
+6. Функция для патента без обертки в Dto
+Было:
+    public CrawledPatent get(String id) {}
+Стало:
+    public CrawledPatent getRawEntity(String id) {}
+
+
+7. В сервисе DownloadService находится метод download, который непонятно что скачивает по его названию (должен загружать архив патента)
+Было:
+    public void download(String crawledFileId) {}
+Стало:
+    public void downloadCrawledFile(String crawledFileId) {}
+
+
+8. Метод сохраняет скачанный файл в харнилище Minio
+Было:
+    private StoredFileDto put(ConnectorDownloadResult downloadResult) {}
+Стало:
+    private StoredFileDto putDownloadedFileToStorage(ConnectorDownloadResult downloadResult) {}
+
+
+9. Метод сохраняет скачанный файл в харнилище Minio
+Было:
+    private StoredFileDto put(ConnectorDownloadResult downloadResult) {}
+Стало:
+    private StoredFileDto putDownloadedFileToStorage(ConnectorDownloadResult downloadResult) {}
+
+
+10. Метод для извлечения файлов из скачанного архива
+Было:
+    public void extract(String crawledFileId) {}
+Стало:
+    public void extractFilesFromArchive(String crawledFileId) {}
+
+
+11. Обновление индексации патента
+Было:
+    public void reIndex(PatentKey key) {}
+Стало:
+    public void reIndexPatentByKey(PatentKey key) {}
+
+
+12. Применение индекса из внешнего сервиса к внутренним файлам
+Было:
+    public void doReIndex(PatentKey key) {}
+Стало:
+    public void exportReIndexedDataFromEhd(PatentKey key) {}

@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BankDynArrayTest {
 
-    BankDynArray<Integer> array;
+    BankingMethodArray<Integer> array;
 
     @Test
     void append_empty_test() {
-        array = new BankDynArray<>(Integer.class);
+        array = new BankingMethodArray<>(Integer.class);
 
         assertEquals(0, array.operationsCount);
         assertEquals(0, array.count);
@@ -18,7 +18,7 @@ class BankDynArrayTest {
 
     @Test
     void append_single_op_test() {
-        array = new BankDynArray<>(Integer.class);
+        array = new BankingMethodArray<>(Integer.class);
         array.append(1);
 
         assertEquals(1, array.getItem(0));
@@ -27,7 +27,7 @@ class BankDynArrayTest {
 
     @Test
     void append_six_op_test() {
-        array = new BankDynArray<>(Integer.class);
+        array = new BankingMethodArray<>(Integer.class);
         array.append(1);
         array.append(2);
         array.append(3);
