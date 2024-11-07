@@ -1,0 +1,59 @@
+######### 3.1 #########
+
+1. Создание диалогово окна в зависимости от среды выполнения программы:
+
+Dialog void configure() {
+    if (System.getProperty("os.name").equals("Windows 11")) {
+        dialog = new WindowDialog();
+    } else {
+        dialog = new HtmlDialog();
+    }
+}
+
+
+2. Создание парсера для нужного входящего запроса:
+
+public Parser createParser(RequestType requestType) {
+    switch (requestType) {
+        case NEW_LICENSE: new NewParser();
+        case TERMINATE_LICENSE: new TermParser();
+        ...
+        default: throw new IllegalArgumentException();
+    }
+}
+
+
+3. Коннекторы для серверов разных стран:
+
+public ConnectorManager {
+
+    Map<SourceCode, Connector> connectorsMap; // заполняется spring-бинами
+
+    private final List<Connector> connectors;
+
+    public ConnectorManager(List<Connector> connectors) {
+        this.connectors = connectors;
+    }
+
+    public Connector getConnector(SourceCode code) {
+        return connectorsMap.get(code);
+    }
+
+    public void afterPropertiesSet() throws Exception {
+        connectorsMap = connectors.stream()
+                .collect(
+                        Collectors.toMap(
+                                Connector::getSourceCode,
+                                Function.identity()
+                        )
+                );
+    }
+
+}
+
+
+######### 3.2 #########
+
+1. SearchService -- SearchServiceImpl
+2. SettingsService -- SettingsServiceImpl
+3. ProtocolMarshaller -- XmlMarshaller
