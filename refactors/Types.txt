@@ -1,0 +1,115 @@
+######### 6 #########
+
+1. Неочевидное приведение типа, чтобы понять, что написано, нужно смотреть приоритет операций:
+(double) count * 100 / size ==> count * 100.0 / size
+
+2. Слишком много деления, можно заменить на одну константу:
+(to.getTime() - from.getTime()) / 1000 / 60 / 60 / 24 ==> (to.getTime() - from.getTime()) / MILLISECONDS_IN_DAY
+
+3. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (Pattern.compile("[A-Z]").matcher(subclass).matches()) {}
+Стало:
+    boolean isSubclassMatchesPattern = Pattern.compile("[A-Z]").matcher(subclass).matches();
+    if (isSubclassMatchesPattern) {}
+
+4. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (!StringUtils.containsOnly(normalized, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0')) {
+        return false;
+    }
+Стало:
+    boolean stringContainsNumbers = StringUtils.containsOnly(normalized, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+    if (!stringContainsNumbers) {
+        return false;
+    }
+
+5. Логическое выражение вынесено в отдельную переменную
+Было:
+    if ((UserPermissionUtils.hasPermission("CHECK_CARD-EDIT"))
+Стало:
+    boolean hasUserCardEditPermission = UserPermissionUtils.hasPermission("CHECK_CARD-EDIT");
+    if (hasUserCardEditPermission) {
+        ...
+    }
+
+6. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (exists == null && request.getStage().getCode().equals(RequestStageCode.NEW)) {}
+Стало:
+    boolean isNewRequest = exists == null && request.getStage().getCode().equals(RequestStageCode.NEW);
+    if (isNewRequest) {
+        ...
+    }
+
+7. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (stage.getCode() == RequestStageCode.EVALUATE && Arrays.asList(Request.Service.INTRCHANGE, Request.Service.NEW).contains(service)) {}
+Стало:
+    boolean isEvaluateRequestStage = stage.getCode() == RequestStageCode.EVALUATE;
+    boolean isChangingRequestService = Arrays.asList(Request.Service.INTRCHANGE, Request.Service.NEW).contains(service);
+    if (isEvaluateRequestStage && isChangingRequestService) {
+        ...
+    }
+
+8. Паттерн вынесен в отдельную константу
+Было:
+    certificateMap.put("fromDate", new SimpleDateFormat("dd.MM.yyyy").format(certificateDto.getValidFrom()));
+    certificateMap.put("toDate", new SimpleDateFormat("dd.MM.yyyy").format(certificateDto.getValidFrom()))
+Стало:
+    certificateMap.put("fromDate", new SimpleDateFormat(DATE_FORMAT_PATTERN).format(certificateDto.getValidFrom()));
+    certificateMap.put("toDate", new SimpleDateFormat(DATE_FORMAT_PATTERN).format(certificateDto.getValidFrom()))
+
+
+9. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (size() == 0 || mins.getFirst().compareTo(item) > 0) {
+        mins.addFirst(item);
+    } else {
+        mins.addFirst(mins.getFirst());
+    }
+Стало:
+    boolean isMinFrontElement = size() == 0 || mins.getFirst().compareTo(item) > 0;
+    if (isMinFrontElement) {
+        mins.addFirst(item);
+    } else {
+        mins.addFirst(mins.getFirst());
+    }
+
+10. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (size() == 0 || mins.getLast().compareTo(item) > 0) {
+        mins.addFirst(item);
+    } else {
+        mins.addFirst(mins.getFirst());
+    }
+Стало:
+    boolean isMinLastElement = size() == 0 || mins.getLast().compareTo(item) > 0;
+    if (isMinFrontElement) {
+        mins.addFirst(item);
+    } else {
+        mins.addFirst(mins.getFirst());
+    }
+
+
+11. Логическое выражение вынесено в отдельную переменную
+Было:
+    if (index >= count || index < 0) {
+        throw new RuntimeException("Index cannot be less than 0 and more than array size");
+    }
+Стало:
+    boolean isIndexOutOfLength = index >= count || index < 0;
+    if (isIndexOutOfLength) {
+        throw new RuntimeException("Index cannot be less than 0 and more than array size");
+    }
+
+
+12. Добавлена проверка на 0 при делении
+Было:
+    public Double getMean() {
+        return sum / size();
+    }
+Стало:
+    public Double getMean() {
+        return size() == 0 ? -1. : sum / size();
+    }
