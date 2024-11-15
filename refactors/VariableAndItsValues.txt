@@ -1,0 +1,208 @@
+######### 6 #########
+
+1. Объявление параметра метода final:
+Было:
+    private int seekSlot(String key) {}
+Стало:
+    private int seekSlot(final String key) {}
+
+
+2. Завершение работы с локально переменной:
+Было:
+    T currentMin = minList.getLast();
+    int compareRes = currentMin.compareTo(newElement);
+    minList.add(compareRes < 0 ? currentMin : newElement);
+Стало:
+    T currentMin = minList.getLast();
+    int compareRes = currentMin.compareTo(newElement);
+    minList.add(compareRes < 0 ? currentMin : newElement);
+    currentMin = null;
+
+
+3. Объявление параметра метода final:
+Было:
+    public void insert(T itm, int index) {}
+Стало:
+    public void insert(final T itm, final int index) {}
+
+
+4. Объявление параметра метода final:
+Было:
+    public void insert(T itm, int index) {}
+Стало:
+    public void insert(final T itm, final int index) {}
+
+
+5. Перенесена инициализация переменной в конструктор:
+Было:
+    private final ImageService imageService;
+    private final TextService textService;
+    private final AtomicInteger searchDelay = new AtomicInteger(1000);
+
+    public ServiceImpl(ImageService imageService, TextService textService) {
+        this.imageService = imageService;
+        this.textService = textService;
+    }
+
+Стало:
+    private final ImageService imageService;
+    private final TextService textService;
+    private final AtomicInteger searchDelay = new AtomicInteger(1000);
+
+    public ServiceImpl(ImageService imageService, TextService textService) {
+        this.imageService = imageService;
+        this.textService = textService;
+        searchDelay = new AtomicInteger(1000);
+    }
+
+6. Объявление параметра конструктора final:
+Было:
+    public ServiceImpl(ImageService imageService, TextService textService) {}
+Стало:
+    public OpsDownloaderImpl(
+            final OpsMarshaller opsMarshaller,
+            final SettingsService settingsService
+    ) {
+        this.opsMarshaller = opsMarshaller;
+        this.settingsService = settingsService;
+    }
+
+
+7. Завершение работы с локально переменной:
+Было:
+    public void add(String str1) {
+        int strHash1 = hash1(str1);
+        int strHash2 = hash2(str1);
+
+        bits |= strHash1;
+        bits |= strHash2;
+    }
+Стало:
+    public void add(String str1) {
+        int strHash1 = hash1(str1);
+        int strHash2 = hash2(str1);
+
+        bits |= strHash1;
+        bits |= strHash2;
+
+        strHash1 = 0;
+        strHash2 = 0;
+    }
+
+
+8. Добавлена проверка инвариант:
+Было:
+    String resultNumber = resultNumberAndEhdGuid.getLeft();
+    String ehdGuid = resultNumberAndEhdGuid.getRight();
+Стало:
+    String resultNumber = resultNumberAndEhdGuid.getLeft();
+    String ehdGuid = resultNumberAndEhdGuid.getRight();
+
+    if (resultNumber == null || ehdGuid == null) {
+        LOGGER.warn("{} {}", resultNumber, ehdGuid);
+    } else {
+        LOGGER.debug("{} {}", resultNumber, ehdGuid);
+    }
+
+
+9. Объявление параметра метода final:
+Было:
+    public static void addOwners(
+                                 PatentPublication destinationPatentPublication,
+                                 List<Owner> owners,
+                                 SourceType patentSource
+                                 ) {}
+Стало:
+    public static void addOwners(
+                                 final PatentPublication destinationPatentPublication,
+                                 final List<Owner> owners,
+                                 final SourceType patentSource
+                                 ) {}
+
+
+10. Добавлено явное определение переменной
+Было:
+    if family == "simple":
+        family_fields = ["docdb_family_id", "simple_family_id"]
+    elif family == "dwpi":
+        family_fields = ["dwpi_family_id"]
+Стало:
+    family = []
+    if family == "simple":
+        family_fields += ["docdb_family_id", "simple_family_id"]
+    elif family == "dwpi":
+        family_fields += ["dwpi_family_id"]
+
+
+11. Добавлена проверка на инвариант:
+Было:
+    PartyBag sourcePartyBag = getPartyBag(sourceBibliographicData);
+    return sourcePartyBag;
+
+Стало:
+    PartyBag sourcePartyBag = getPartyBag(source);
+    if (sourcePartyBag == null) {
+        LOGGER.warn("SourcePartyBag is empty");
+        return Collections.emptyList();
+    }
+    return sourcePartyBag;
+
+
+12. Добавлена проверка на инвариант:
+Было:
+    PartyBag sourcePartyBag = getPartyBag(sourceBibliographicData);
+    return sourcePartyBag;
+
+Стало:
+    PartyBag sourcePartyBag = getPartyBag(source);
+    if (sourcePartyBag == null) {
+        LOGGER.warn("SourcePartyBag is empty");
+        return Collections.emptyList();
+    }
+    return sourcePartyBag;
+
+
+13. Корректное оповещение об инварианте:
+Было:
+    if (item.getFiles() != null) {
+        ...
+    } else if (item.getArchive() != null) {
+        ...
+    } else {
+        throw new IllegalArgumentException();
+    }
+
+Стало:
+    if (item.getFiles() != null) {
+        ...
+    } else if (item.getArchive() != null) {
+        ...
+    } else {
+        LOGGER.error("Item does not have items to store");
+        throw new IllegalArgumentException();
+    }
+
+
+14. Добавлена проверка на инвариант:
+Было:
+    private void removeEvent(String id) {
+        eventRepository.deleteById(id);
+        LOGGER.debug("{} event deleted", id);
+    }
+
+Стало:
+    PartyBag sourcePartyBag = getPartyBag(source);
+    if (String.isBlank(id)) {
+        LOGGER.error("Event id is empty");
+        return;
+    }
+
+    eventRepository.deleteById(id);
+    LOGGER.debug("{} event deleted", id);
+
+
+15. Объявление параметра метода final:
+Было:
+    public StoredFileDto put(String name, InputStream inputStream, long size) {}
+Стало:
+    public StoredFileDto put(final String name, final InputStream inputStream, final long size) {}
