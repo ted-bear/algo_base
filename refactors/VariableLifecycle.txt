@@ -1,0 +1,272 @@
+1. Сужение области видимости переменной:
+Было:
+    Patent patent;
+
+    try {
+        stopWatch.start("unmarshallPatent");
+        patentPublication = st96Marshaller.unmarshallPatent(getUnifiedData(crawledPatent));
+        stopWatch.stop();
+        ...
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+Стало:
+    try {
+        stopWatch.start("unmarshallPatent");
+        Patent patent = marshaller.unmarshallPatent(getUnifiedData(crawledPatent));
+        stopWatch.stop();
+        ...
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+
+################################################################################
+2. Использование контекстного менеджера with для работы с файлом
+Было:
+    patentXml = open('pat.xml', 'r')
+    patent = patentXml.read()
+    patentXml.close()
+Стало:
+    def read_patent(file_path):
+        with open(file_path, 'r') as patentXml:  # Использование контекстного менеджера
+            patent = patentXml.read()
+        return patent
+
+
+################################################################################
+3. Группировка связанных команд
+Было:
+    for hit in hits:
+        if hit["_id"] == doc_id:
+            continue
+        doc = hit["_source"]
+        ...
+        doc["similarity"] = similarity_score
+Стало:
+    for hit in hits:
+        if hit["_id"] == doc_id:
+            continue
+        doc = fill_doc(hit)
+
+    def fill_doc(self, hit):
+        doc = hit["_source"]
+        ...
+        doc["similarity"] = similarity_score
+        return doc
+
+
+################################################################################
+4. Группировка связанных команд в отдельные методы
+Было:
+    # query
+    if "q" in params:
+        q = params["q"]
+        if not isinstance(q, str):
+            raise BadRequestError("<q> MUST BE of string type.")
+        q = q.strip()
+        if q == "*":  # special query to match all documents
+            q = ""
+        if q:
+            try:
+                self._q = q
+                ...
+    # natural search
+    elif "qn" in params:
+        qn = params.get("qn", "").strip()
+        if qn:
+            self._query = query_processor.parse(natural_search_query(qn),
+                                                allow_lexis=self._allow_lexis)
+            ...
+
+Стало:
+    # query
+    if "q" in params:
+        process_query(params)
+    # natural search
+    elif "qn" in params:
+        process_query_natural(params)
+
+
+################################################################################
+5. Группировка связанных команд в отдельные методы
+Было:
+    def post():
+        ...
+        if "datasets" in params:
+            datasets = params["datasets"]
+            if not isinstance(datasets, list):
+                raise BadRequestError("Bad dataset name.")
+            for dataset in datasets:
+                if not isinstance(dataset, str):
+                    raise BadRequestError("Dataset name MUST BE a string.")
+            datasets = [dataset.strip().lower() for dataset in datasets if len(dataset.strip())]
+            if len(datasets) == 0:
+                raise BadRequestError("At least one dataset should be specified.")
+            if len(self._dataset_collection.validate_dataset_ids(datasets)):
+                raise BadRequestError("Search on unknown dataset requested.")
+            self._datasets = datasets
+            self._indices = self._dataset_collection.indices(datasets)
+        ...
+
+Стало:
+    def post():
+        ...
+        if "datasets" in params:
+            process_datasets_param(params["datasets"])
+        ...
+
+    def process_datasets_param(datasets):
+        if not isinstance(datasets, list):
+            raise BadRequestError("Bad dataset name.")
+        ...
+        self._indices = self._dataset_collection.indices(datasets)
+
+
+################################################################################
+6. Группировка использования переменной:
+Было:
+     CountRequest countRequest = new CountRequest();
+     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+     searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+     countRequest.source(searchSourceBuilder);
+     return this.esClient.count(countRequest, RequestOptions.DEFAULT).getCount();
+Стало:
+     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+     searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+
+     CountRequest countRequest = new CountRequest();
+     countRequest.source(searchSourceBuilder);
+     return this.esClient.count(countRequest, RequestOptions.DEFAULT).getCount();
+
+
+################################################################################
+7. Группировка использования переменной:
+Было:
+    SearchRequest searchRequest = new SearchRequest();
+    SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+    var agg = AggregationBuilders.terms("by_publishing_office")
+                    .field("common.publishing_office");
+    searchSourceBuilder.aggregation(agg);
+    searchRequest.source(searchSourceBuilder);
+Стало:
+    var agg = AggregationBuilders.terms("by_publishing_office")
+                    .field("common.publishing_office");
+
+    SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+    searchSourceBuilder.aggregation(agg);
+
+    SearchRequest searchRequest = new SearchRequest();
+    searchRequest.source(searchSourceBuilder);
+
+
+################################################################################
+8. Группировка использования переменной:
+Было:
+    String publication = crawledPatent.getPublicationOffice();
+    String document = crawledPatent.getDocumentKindCode();
+    Date date = crawledPatent.getPublicationDate();
+
+    ... // Код никак не использующий publication, document, date
+
+    stopWatch.start("get file names");
+    List<String> fileNames = exporter.getFileNames(new Query(resultNumber, publication, document, date));
+
+Стало:
+    ...
+
+    String publicationOffice = crawledPatent.getPublicationOffice();
+    String documentKindCode = crawledPatent.getDocumentKindCode();
+    Date publicationDate = crawledPatent.getPublicationDate();
+    stopWatch.start("get file names");
+    List<String> fileNames = exporter.getFileNames(new Query(resultNumber, publicationOffice, documentKindCode, publicationDate));
+
+
+################################################################################
+9. Группировка использования переменной:
+Было:
+    StopWatch stopWatch = new StopWatch(String.format("export-%s", patent.getId()));
+    Exporter patentsExporter = getPatentsExporter();
+
+    ...
+    if(ehdGuid != null){
+        ...
+    }
+
+    try {
+        for (ExportQueryFile file : exportQueryFiles) {
+            ...
+        }
+        stopWatch.start("ehd export");
+    }
+
+Стало:
+    Exporter patentsExporter = getPatentsExporter();
+
+    ...
+    if(ehdGuid != null){
+        ...
+    }
+
+    try {
+        for (ExportQueryFile file : exportQueryFiles) {
+            ...
+        }
+        StopWatch stopWatch = new StopWatch(String.format("export-%s", patent.getId()));
+        stopWatch.start("ehd export");
+    }
+
+
+################################################################################
+10. Изменил область видимости переменной
+Было:
+    CrawledPatentRepository crawledPatentRepository;
+
+Стало:
+    private final CrawledPatentRepository crawledPatentRepository;
+
+
+################################################################################
+11. Изменил область видимости переменной
+Было:
+    StoredFilesService storedFilesService;
+
+Стало:
+    private final StoredFilesService storedFilesService;
+
+
+################################################################################
+12. Изменил область видимости переменной
+Было:
+    SettingsService settingsService;
+
+Стало:
+    private final SettingsService settingsService;
+
+
+################################################################################
+13. Изменил область видимости переменной
+Было:
+    OrchestrationService orchestrationService;
+
+Стало:
+    private final OrchestrationService orchestrationService;
+
+
+################################################################################
+14. Изменил область видимости переменной
+Было:
+    QuartzService quartzService;
+
+Стало:
+    private final QuartzService quartzService;
+
+
+################################################################################
+15. Изменил область видимости переменной
+Было:
+    ConnectorsManager connectorsManager;
+
+Стало:
+    private final ConnectorsManager connectorsManager;
