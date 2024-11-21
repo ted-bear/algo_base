@@ -1,0 +1,79 @@
+1. Связывание во время Runtime и во время написания кода
+
+public class SearchClient {
+
+    // Так как общая структура Http запроса не меняется, ее можно присвоить переменной сразу
+    private final static String DATASETS_URI = "http://{host}:{port}/";
+
+
+    // Ввиду того, что в зависимости от окружения, в котором запускается программа,
+    // могут меняться адреса сервера, на который нам нужно пойти, host и port нужно указывать
+    // через переменные окружения
+    @Value("${search.host}")
+    private String host;
+
+    @Value("${search.port}")
+    private String port;
+
+    public Data getDataFromWeb(String domainPath) {
+        RestClient restClient = RestClient.create();
+
+        String rawJsonResponse = restClient.get()
+                .uri(DATASETS_URI, host, port)
+                .retrieve()
+                .body(String.class);
+    }
+}
+
+
+2. Связывание во время выполнения программы через вызов фабричного метода и через внедрение зависимостей
+
+@Service
+@RequiredArgsConstructor
+public class ElasticSearchService {
+
+    // Переменная logger создается одна на весь класс, поэтому ее можно связываться с объектом в момент
+    // загрузки класса.
+    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchService.class);
+
+    // Переменные esClient и IndicesService предоставляют контракт для обращения
+    // к нужной функциональности, поэтому могут применяться различные реализации этих интерфейсов
+    // Для внедрения на этапе создания объекта используется внедрение зависимостей
+    private final RestHighLevelClient esClient;
+    private final IndicesService indicesService;
+}
+
+
+3. Связывание во время компиляции:
+
+public class BankingMethodArray<T> {
+
+    private static final Integer DEFAULT_CAPACITY = 16;
+
+    public T[] array;
+    public int count;
+    public int capacity;
+    public int operationsCount;
+    Class clazz;
+
+    // Ввиду того, что имеется два конструктора с параметром для начально длины и без,
+    // можно завести переменную, которая будет отвечать за длину массива по-умолчанию, чтобы
+    // сделать код более читаемым и также сохранить гибкость
+    public BankingMethodArray(Class clz) {
+        ...
+        makeArray(DEFAULT_CAPACITY);
+    }
+
+    public BankingMethodArray(Integer size, Class clz) {
+        ...
+        makeArray(size);
+    }
+
+    public void makeArray(int new_capacity) {
+        capacity = new_capacity;
+
+        ...
+    }
+    ..,
+}
+
