@@ -1,0 +1,73 @@
+1. Массив заменен списком и убрана прямая индексация
+Было:
+    int[] numbers = new int[9];
+    for (int i = 0; i < 9; i++) {
+        numbers[i] = Character.getNumericValue(snils.charAt(i));
+    }
+
+Стало:
+    List<Integer> numbers = new ArrayList<>();
+    for (char num : snils.toCharArray()) {
+        numbers.add(Character.getNumericValue(num));
+    }
+
+
+2. Убрана прямая индексация
+Было:
+    int[] multipliers = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+    int sum = 0;
+    for (int i = 0; i < 9; i++) {
+        sum += numbers[i] * multipliers[i];
+    }
+
+Стало:
+    int sum = 0;
+    int multiplier = 9;
+    for (Integer num : numbers) {
+        sum += num * multiplier;
+        if (multiplier != 1) multiplier--;
+    }
+
+
+3. Убрана прямая индексация
+Было:
+    for (let i = 0; i < points.length; i++) {
+        const pt = points[i];
+        const adjustedPt = getPointAlongLine(pt[0], pt[1], centre.x, centre.y, distance);
+        result.push([Number(adjustedPt.x.toFixed(4)), Number(adjustedPt.y.toFixed(4))]);
+    }
+
+Стало:
+    for (var pt : points) {
+        const adjustedPt = getPointAlongLine(pt[0], pt[1], centre.x, centre.y, distance);
+        result.push([Number(adjustedPt.x.toFixed(4)), Number(adjustedPt.y.toFixed(4))]);
+    }
+
+
+4. Убрана прямая индексация
+Было:
+    for (let i = 0; i < keys.length; i++) {
+      const invoke = reducer[keys[i]](state[keys[i]], action);
+      nextReducers[keys[i]] = invoke;
+    }
+
+Стало:
+    for (let key of keys) {
+      const invoke = reducer[key](state[key], action);
+      nextReducers[key] = invoke;
+    }
+
+
+5. Убрана прямая индексация
+Было:
+    for (int i = 0; i < str1.length(); i++) {
+        int code = str1.charAt(i);
+        result = result * 17 + code;
+        result %= filter_len;
+    }
+
+Стало:
+    for (char character : str1.toCharArray()) {
+                    result = result * 17 + character;
+                    result %= filter_len;
+    }
