@@ -1,0 +1,88 @@
+###### Добавление комментариев ######
+1.
+    /**
+     * Метод превращает структуру объектов во входном списке
+     * в плоскую, то есть убирает лишнюю вложенности, если тип category,
+     * и достает из каждого dataset название его индекса.
+     */
+    private List<String> extractIndices(List<Dataset> datasets) {
+        List<String> indices = new ArrayList<>();
+
+        for (Dataset dataset : datasets) {
+            if (Objects.equals(dataset.getType(), "category")) {
+                indices.addAll(extractIndexFromCategory(dataset));
+            } else if (Objects.equals(dataset.getType(), "dataset")) {
+                indices.add(extractIndexFromDataset(dataset));
+            }
+        }
+
+        return indices.stream()
+                .filter(Objects::nonNull)
+                .filter(index -> !index.contains("dev_"))
+                .collect(Collectors.toList());
+    }
+
+
+2.
+/**
+ * Метод предназначен для группировки записей статистик по стране, типу документа и году,
+ * когда документ был опубликован, и для каждой записи берет самое недавнее время вычисления
+ * эти параметров
+ */
+private List<Statistic> getActualStatistics(List<Statistic> statistics) {
+    Collection<List<Statistic>> groupedStatistics = statistics.stream()
+            .collect(
+                    Collectors.groupingBy(
+                            stat -> Arrays.asList(stat.getCountryCode(), stat.getDocumentType(), stat.getYear())
+                    )
+            ).values();
+
+    return groupedStatistics.stream()
+            .map(group -> group.stream()
+                    .max(Comparator.comparing(Statistic::getCalculationDate))
+            )
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .toList();
+}
+
+
+3.
+/**
+ * Метод составляет запрос для ElasticSearch, используя вложенную агрегацию
+ * со следующей схемой: код страны -> тип документа -> год -> самый ранний и поздний документы
+ * @return searchSourceBuilder
+ */
+private SearchSourceBuilder getSearchQueryWithAggregations()...
+
+
+4.
+/**
+ * Метод проверяет номер СНИЛС согласно регламентированным правилам
+ * @param snils
+ */
+public static boolean isValid(String snils) {
+
+
+5.
+/**
+ * Обход дирректории и поиск файлов по расширению
+ */
+public static List<File> walkAndSearch(Path path, String suffix) throws IOException {
+
+
+6.
+/**
+ * Метод преобразует данные из полученного документа в сущность Библиографические документы
+ */
+private static BibliographicDoc getBibliographicDoc(Document document) {
+
+
+7.
+/**
+ * Преобразует строку вида yyyy-WW в дату первого дня недели
+ *
+ * @param yearWeek
+ * @return Date
+ */
+public static Date getWeekStart(String yearWeek) {
