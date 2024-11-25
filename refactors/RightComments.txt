@@ -1,0 +1,79 @@
+1. Информативный комментарий
+if (!hasDocNumber) {
+    //Если номера Документа не было, то смотрим - был ли отправлен запрос
+    List<RequestDto> getDocNumRequest = requestFoivService
+        .getAllDocRequest(requestDto, Request.TargetType.DOCUMENT_GET_NUMBER);
+    ...
+}
+
+
+2. Информативный комментарий
+//Номер Документа есть, смотрим запросы на предоставление решения
+LicenseDto licenseDto = requestDto.getLicense();
+if (licenseDto == null) {
+    ...
+}
+
+
+3. Комментарии TODO
+// TODO: Убрать и заменить на типизированные и именованные атрибуты
+void putExtra(String name, String value) {
+    allAttrs.put(name, value);
+}
+
+
+4. Прояснение
+// Скрипт необходим для ESClient, чтобы доставать из полной даты только год
+var getYearScript = QueryBuilders
+        .scriptQuery(
+                new Script("doc['common.publication_date'].value.getYear()")
+        ).script();
+
+
+5. Прояснение
+/** Так как эластик возвращает дату в формате double, необходимо перевести
+ * ее в стандартный LocalDate
+ */
+private LocalDate getLocalDateFromDouble(Double rawDate) {
+
+
+6. TODO
+// TODO: интеграция с сервисом подсчета документов в системе
+@GetMapping(value = "/document")
+public CountDto countDocuments() throws  {
+    throw new NotImplementedException();
+}
+
+
+7. Информативный комментарий
+//Формирование запроса в ФНС
+requestService.createAndSave(request, Request.Type.FNS);
+
+
+8. Информативный комментарий
+// Заявление должно неявно для пользователя проходить все стадии формирования
+Stage extract = stageService.getByCode(RequestStageCode.EXTRACT);
+Stage notice = stageService.getByCode(RequestStageCode.NOTICE);
+
+
+9. Информативный комментарий
+//отправка уведомления на почту
+notificationService.sendNotification(request);
+
+
+10. Информативный комментарий
+// Смена состояния новой документа с Project на Active
+if (stageCode == DocumentStageCode.DESIGNED && (curRequest.getDocument() != null))
+
+
+11. Предупреждения о последствиях
+/*
+ Закомментировано на основании:
+ В бизнес-процессах не предусмотрено создание нового экземпляра документа
+ из заявления в статусе "Отменено"
+ */
+
+
+12. TODO
+} catch (Exception ignored) {
+    // TODO - необходимо согласовать с заказчиком как обрабатывать исключения в этом сценарии (отложено на следующий спринт)
