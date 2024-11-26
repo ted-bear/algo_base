@@ -1,0 +1,122 @@
+1. Удален закомментированный код
+Было:
+    private void addToActive(CrawlerTask task) {
+        activeTasks.get(task.getKey()).add(task);
+    //        activeTasksByObjectKey.put(task.getKey(), task);
+    //        activeLocks.addAll(task.getLocks());
+    }
+Стало:
+    private void addToActive(CrawlerTask task) {
+        activeTasksByGroupKey.get(task.getGroupKey()).add(task);
+    }
+
+
+2. Неочевидный комментарий
+Было:
+    //Название изобретения
+    if (bibliographicData.getInventionTitles() != null && !bibliographicData.getInventionTitles().isEmpty()) {
+        ...
+    }
+Стало:
+    // В случае наличия в исходных данных поля "Название изобретения" происходит его маппинг на объект
+
+
+3. Неочевидный комментарий -- непонятно, что нужно сделать
+Было:
+    //todo
+    if (content.size() == 0) {
+Стало -- комментарий удален
+
+
+4. Закомментированный код -- удалено:
+    /*
+        if(!registeredUtilityModelPublicationPartyBag)
+        ...
+    */
+
+
+5. Неочевидный комментарий
+Было:
+    /**
+    * Представитель
+    */
+    private static RegisteredPractitionerBag getRegisteredPractitionerBag(AgentsType agentsType) {}
+Стало:
+    /**
+    * Метод проверяет наличие поля "Представитель" в архиве и в случае наличия мапит его на сущность
+    */
+    private static RegisteredPractitionerBag getRegisteredPractitionerBag(AgentsType agentsType) {}
+
+
+6. Шум -- даны корректные названия переменным
+Было:
+    int r = (int) (Math.random() * 256); //red
+    int g = (int) (Math.random() * 256); //green
+    int b = (int) (Math.random() * 256); //blue
+Стало:
+    int red = (int) (Math.random() * 256);
+    int green = (int) (Math.random() * 256);
+    int blue = (int) (Math.random() * 256);
+
+
+7. Шум -- даны корректные названия переменным
+Было:
+    int p = (a << 24) | (r << 16) | (g << 8) | b; //pixel
+Стало:
+    int pixel = (a << 24) | (red << 16) | (green << 8) | blue;
+
+
+8. Комбо: неинформативный комментарий с шумом -- полностью удалено
+Было:
+    //bibliographicData.setBag(new Bag());//заказчик попросил убрать
+
+
+9. Комбо 2 (про git прошлый подрядчик не слышал) -- удалено
+Было:
+    //addRegisteredBag(bibliographicData, bag);//Заказчик попросил убрать. Но вдруг потом понадобится
+
+
+10. Шум (неясно в чем заключается "todo" и когда его планируют сделать) -- удалено
+//TODO самому не нравится, перенос старой логики валидирования ключа
+
+
+11. Использование комментариев, вместо понятного названия
+Было:
+    //Если это электронное или выписка, то статусы не считаем
+    if (RequestSourceType.E.equals(requestDto.getSourceType())
+        || Request.Service.COMPLEXEXTRACT.equals(requestDto.getType())) {
+        return Optional.empty();
+    }
+Стало:
+    if (isRequestSourceE() || isRequestServiceComplexExtract()) {
+        return Optional.empty();
+    }
+
+
+12. Закомментированный код -- удалено:
+    logger
+        .atError()
+        .addKeyValue("fromDate", fromDate)
+        .addKeyValue("daysCount", daysCount)
+        .setCause(e)
+        .log("Ошибка вычисления след. рабочей даты");
+    // result = DateUtils.addDays(fromDate, daysCount);
+
+
+13. Шум -- удалено:
+    add.addClickListener(this::addItem); // Java 8
+
+
+14. Шум -- удалено:
+Было:
+    // Name of the uploaded file
+    String filename;
+Стало:
+    String filename;
+
+
+15. Шум -- удалено:
+Было:
+    private String licNumber; // на самом деле это licNumber
+Стало:
+    private String licNumber;
