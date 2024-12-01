@@ -9,4 +9,14 @@ public class Recursion {
 
         return n * power(n, m - 1);
     }
+
+    // вычисление суммы цифр числа
+    public static long calculateSumOfNumbers(long number) {
+        number = Math.abs(number);
+        long countOfNumbers = (long) Math.log10(number * 1.);
+
+        if (countOfNumbers == 0) return number;
+
+        return number % 10 + calculateSumOfNumbers(number / 10);
+    }
 }
