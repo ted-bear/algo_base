@@ -61,7 +61,7 @@ public class NativeDictionary<T> {
         return null;
     }
 
-    private int seekSlot(String key) {
+    private int seekSlot(final String key) {
         int firstIndex = hashFun(key);
 
         if (slots[firstIndex] == null) {

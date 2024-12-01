@@ -63,6 +63,8 @@ public class Stack<T extends Comparable<T>> {
             T currentMin = minList.getLast();
             int compareRes = currentMin.compareTo(newElement);
             minList.add(compareRes < 0 ? currentMin : newElement);
+
+            currentMin = null;
         }
     }
 }

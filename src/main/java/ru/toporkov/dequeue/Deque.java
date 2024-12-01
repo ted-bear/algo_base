@@ -7,7 +7,6 @@ public class Deque<T extends Comparable<T>> {
 
     private final List<T> list;
     private final List<T> mins;
-    private T minElement;
 
     public Deque() {
         list = new LinkedList<>();
@@ -15,7 +14,8 @@ public class Deque<T extends Comparable<T>> {
     }
 
     public void addFront(T item) {
-        if (size() == 0 || mins.getFirst().compareTo(item) > 0) {
+        boolean isMinFrontElement = size() == 0 || mins.getFirst().compareTo(item) > 0;
+        if (isMinFrontElement) {
             mins.addFirst(item);
         } else {
             mins.addFirst(mins.getFirst());
@@ -25,7 +25,8 @@ public class Deque<T extends Comparable<T>> {
     }
 
     public void addTail(T item) {
-        if (size() == 0 || mins.getLast().compareTo(item) > 0) {
+        boolean isMinLastElement = size() == 0 || mins.getLast().compareTo(item) > 0;
+        if (isMinLastElement) {
             mins.addLast(item);
         } else {
             mins.addLast(mins.getLast());

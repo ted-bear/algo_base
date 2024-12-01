@@ -45,6 +45,9 @@ public class BloomFilter {
 
         bits |= strHash1;
         bits |= strHash2;
+
+        strHash1 = 0;
+        strHash2 = 0;
     }
 
     public boolean isValue(String str1) {

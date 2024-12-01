@@ -49,7 +49,7 @@ public class DynArray<T> {
      * In the best way, when it is not necessary to expand array it works with O(1)
      * With expand it needs O(n)
      */
-    public void insert(T itm, int index) {
+    public void insert(final T itm, final int index) {
         if (index >= count || index < 0) {
             throw new RuntimeException("Index cannot be less than 0 and more than array size");
         }
