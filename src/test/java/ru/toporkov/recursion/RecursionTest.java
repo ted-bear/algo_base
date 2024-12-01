@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.toporkov.recursion.Recursion.calculateListLength;
 import static ru.toporkov.recursion.Recursion.calculateSumOfNumbers;
+import static ru.toporkov.recursion.Recursion.isPalindrome;
 import static ru.toporkov.recursion.Recursion.power;
 
 class RecursionTest {
@@ -231,53 +234,164 @@ class RecursionTest {
 
     @Test
     void givenZeroLengthList_whenCalculateLength_thenReturnZero() {
-        //given
+        // given
         List<Integer> list = List.of();
 
-        //when
+        // when
         long length = calculateListLength(list);
 
-        //then
+        // then
         assertEquals(0, length);
     }
 
     @Test
     void givenOneLengthList_whenCalculateLength_thenReturnOne() {
-        //given
+        // given
         List<Integer> list = new ArrayList<>(List.of(1));
 
-        //when
+        // when
         long length = calculateListLength(list);
 
-        //then
+        // then
         assertEquals(1, length);
     }
 
 
     @Test
     void givenTwoLengthList_whenCalculateLength_thenReturnTwo() {
-        //given
+        // given
         List<Integer> list = new ArrayList<>(List.of(1, 2));
 
-        //when
+        // when
         long length = calculateListLength(list);
 
-        //then
+        // then
         assertEquals(2, length);
     }
 
     @Test
     void givenAThousandLengthList_whenCalculateLength_thenReturnAThousand() {
-        //given
+        // given
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             list.add(i);
         }
 
-        //when
+        // when
         long length = calculateListLength(list);
 
-        //then
+        // then
         assertEquals(1000, length);
+    }
+
+
+    /////////////////////////////////////////////////////////////////
+
+    @Test
+    void giveEmptyString_whenIsPalindrome_thenTrue() {
+        // given
+        String str = "";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertTrue(isPalindrome);
+    }
+
+    @Test
+    void giveOneLengthString_whenIsPalindrome_thenTrue() {
+        // given
+        String str = "a";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertTrue(isPalindrome);
+    }
+
+    @Test
+    void giveTwoLengthPalindrome_whenIsPalindrome_thenTrue() {
+        // given
+        String str = "aa";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertTrue(isPalindrome);
+    }
+
+    @Test
+    void giveTwoLengthNotPalindrome_whenIsPalindrome_thenFalse() {
+        // given
+        String str = "ab";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertFalse(isPalindrome);
+    }
+
+    @Test
+    void giveThreeLengthPalindrome_whenIsPalindrome_thenTrue() {
+        // given
+        String str = "aba";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertTrue(isPalindrome);
+    }
+
+    @Test
+    void giveThreeLengthNotPalindrome_whenIsPalindrome_thenFalse() {
+        // given
+        String str = "aab";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertFalse(isPalindrome);
+    }
+
+    @Test
+    void giveFourLengthPalindrome_whenIsPalindrome_thenTrue() {
+        // given
+        String str = "abba";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertTrue(isPalindrome);
+    }
+
+    @Test
+    void giveFourLengthNotPalindrome_whenIsPalindrome_thenFalse() {
+        // given
+        String str = "abca";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertFalse(isPalindrome);
+    }
+
+    @Test
+    void givePalindromeSentence_whenIsPalindrome_thenFalse() {
+        // given
+        String str = "Was it a car or a cat I saw";
+
+        // when
+        boolean isPalindrome = isPalindrome(str);
+
+        // then
+        assertTrue(isPalindrome);
     }
 }

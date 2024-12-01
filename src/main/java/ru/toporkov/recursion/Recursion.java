@@ -22,7 +22,7 @@ public class Recursion {
         return number % 10 + calculateSumOfNumbers(number / 10);
     }
 
-    // расчёт длины списка, для которого разрешена только операция удаления первого элемента pop(0) (и получение длины конечно);
+    // расчёт длины списка, для которого разрешена только операция удаления первого элемента pop(0) (и получение длины конечно)
     public static long calculateListLength(List<?> list) {
         if (list.isEmpty()) {
             return 0;
@@ -31,5 +31,25 @@ public class Recursion {
         list.removeFirst();
 
         return 1 + calculateListLength(list);
+    }
+
+    // проверка, является ли строка палиндромом
+    public static boolean isPalindrome(String string) {
+        String trimmed = string.replaceAll(" ", "");
+        String lowerCase = trimmed.toLowerCase();
+        return isPalindromeInternal(lowerCase);
+    }
+
+    private static boolean isPalindromeInternal(String string) {
+        if (string.isEmpty()) {
+            return true;
+        }
+
+        if (string.length() == 1) {
+            return true;
+        }
+
+        return string.charAt(0) == string.charAt(string.length() - 1) &&
+                isPalindromeInternal(string.substring(1, string.length() - 1));
     }
 }
