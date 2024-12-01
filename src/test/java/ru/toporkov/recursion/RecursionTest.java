@@ -2,7 +2,11 @@ package ru.toporkov.recursion;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.toporkov.recursion.Recursion.calculateListLength;
 import static ru.toporkov.recursion.Recursion.calculateSumOfNumbers;
 import static ru.toporkov.recursion.Recursion.power;
 
@@ -220,5 +224,60 @@ class RecursionTest {
 
         // then
         assertEquals(47, res);
+    }
+
+
+    /////////////////////////////////////////////////////////////////
+
+    @Test
+    void givenZeroLengthList_whenCalculateLength_thenReturnZero() {
+        //given
+        List<Integer> list = List.of();
+
+        //when
+        long length = calculateListLength(list);
+
+        //then
+        assertEquals(0, length);
+    }
+
+    @Test
+    void givenOneLengthList_whenCalculateLength_thenReturnOne() {
+        //given
+        List<Integer> list = new ArrayList<>(List.of(1));
+
+        //when
+        long length = calculateListLength(list);
+
+        //then
+        assertEquals(1, length);
+    }
+
+
+    @Test
+    void givenTwoLengthList_whenCalculateLength_thenReturnTwo() {
+        //given
+        List<Integer> list = new ArrayList<>(List.of(1, 2));
+
+        //when
+        long length = calculateListLength(list);
+
+        //then
+        assertEquals(2, length);
+    }
+
+    @Test
+    void givenAThousandLengthList_whenCalculateLength_thenReturnAThousand() {
+        //given
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(i);
+        }
+
+        //when
+        long length = calculateListLength(list);
+
+        //then
+        assertEquals(1000, length);
     }
 }

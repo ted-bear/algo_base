@@ -1,5 +1,7 @@
 package ru.toporkov.recursion;
 
+import java.util.List;
+
 public class Recursion {
 
     // возведение числа N в степень M
@@ -18,5 +20,16 @@ public class Recursion {
         if (countOfNumbers == 0) return number;
 
         return number % 10 + calculateSumOfNumbers(number / 10);
+    }
+
+    // расчёт длины списка, для которого разрешена только операция удаления первого элемента pop(0) (и получение длины конечно);
+    public static long calculateListLength(List<?> list) {
+        if (list.isEmpty()) {
+            return 0;
+        }
+
+        list.removeFirst();
+
+        return 1 + calculateListLength(list);
     }
 }
