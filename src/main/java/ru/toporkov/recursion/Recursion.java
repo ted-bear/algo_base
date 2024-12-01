@@ -52,4 +52,37 @@ public class Recursion {
         return string.charAt(0) == string.charAt(string.length() - 1) &&
                 isPalindromeInternal(string.substring(1, string.length() - 1));
     }
+
+    // печать только чётных значений из списка
+    public static void printEvenElements(List<Integer> numbers) {
+        printEvenElements(numbers, 0);
+    }
+
+    private static void printEvenElements(List<Integer> numbers, int index) {
+
+        if (index == numbers.size()) return;
+
+        Integer currentNumber = numbers.get(index);
+        if (currentNumber % 2 == 0) {
+            System.out.println(currentNumber);
+        }
+
+        printEvenElements(numbers, index + 1);
+    }
+
+    // печать элементов списка с чётными индексами
+    public static void printEvens(List<Integer> numbers) {
+        printEvens(numbers, 0);
+    }
+
+    private static void printEvens(List<Integer> numbers, int index) {
+
+        if (index == numbers.size()) return;
+
+        if (index % 2 == 0) {
+            System.out.println(numbers.get(index));
+        }
+
+        printEvens(numbers, index + 1);
+    }
 }

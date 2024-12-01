@@ -12,6 +12,8 @@ import static ru.toporkov.recursion.Recursion.calculateListLength;
 import static ru.toporkov.recursion.Recursion.calculateSumOfNumbers;
 import static ru.toporkov.recursion.Recursion.isPalindrome;
 import static ru.toporkov.recursion.Recursion.power;
+import static ru.toporkov.recursion.Recursion.printEvenElements;
+import static ru.toporkov.recursion.Recursion.printEvens;
 
 class RecursionTest {
 
@@ -393,5 +395,17 @@ class RecursionTest {
 
         // then
         assertTrue(isPalindrome);
+    }
+
+    @Test
+    void givenList_whenPrintEvenElements_givenNothing() {
+        List<Integer> numbers = List.of(1, 1, 2, 1, 1);
+        printEvenElements(numbers);
+    }
+
+    @Test
+    void givenList_whenPrintEvens_givenNothing() {
+        List<Integer> numbers = List.of(1, 2, 3);
+        printEvens(numbers);
     }
 }
