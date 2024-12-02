@@ -49,8 +49,9 @@ public class Recursion {
             return true;
         }
 
-        return string.charAt(0) == string.charAt(string.length() - 1) &&
-                isPalindromeInternal(string.substring(1, string.length() - 1));
+        if (string.charAt(0) != string.charAt(string.length() - 1)) return false;
+
+        return isPalindromeInternal(string.substring(1, string.length() - 1));
     }
 
     // печать только чётных значений из списка
@@ -77,12 +78,13 @@ public class Recursion {
 
     private static void printEvens(List<Integer> numbers, int index) {
 
-        if (index == numbers.size()) return;
+        if (index >= numbers.size()) return;
 
-        if (index % 2 == 0) {
-            System.out.println(numbers.get(index));
-        }
+        System.out.println(numbers.get(index));
 
-        printEvens(numbers, index + 1);
+        printEvens(numbers, index + 2);
     }
+
+
+    // нахождение второго максимального числа в списке (с учётом, что максимальных может быть несколько, если они равны)
 }

@@ -405,7 +405,7 @@ class RecursionTest {
 
     @Test
     void givenList_whenPrintEvens_givenNothing() {
-        List<Integer> numbers = List.of(1, 2, 3);
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5);
         printEvens(numbers);
     }
 }
