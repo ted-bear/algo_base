@@ -51,7 +51,9 @@ public class Recursion {
 
         if (string.charAt(0) != string.charAt(string.length() - 1)) return false;
 
-        return isPalindromeInternal(string.substring(1, string.length() - 1));
+        String substring = string.substring(1, string.length() - 1);
+
+        return isPalindromeInternal(substring);
     }
 
     // печать только чётных значений из списка
