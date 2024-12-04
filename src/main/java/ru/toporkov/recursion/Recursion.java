@@ -37,23 +37,21 @@ public class Recursion {
     public static boolean isPalindrome(String string) {
         String trimmed = string.replaceAll(" ", "");
         String lowerCase = trimmed.toLowerCase();
-        return isPalindromeInternal(lowerCase);
+        return isPalindromeInternal(lowerCase, 0);
     }
 
-    private static boolean isPalindromeInternal(String string) {
+    private static boolean isPalindromeInternal(String string, int charIndex) {
         if (string.isEmpty()) {
             return true;
         }
 
-        if (string.length() == 1) {
+        if (charIndex >= string.length() - 1 - charIndex) {
             return true;
         }
 
-        if (string.charAt(0) != string.charAt(string.length() - 1)) return false;
+        if (string.charAt(charIndex) != string.charAt(string.length() - 1 - charIndex)) return false;
 
-        String substring = string.substring(1, string.length() - 1);
-
-        return isPalindromeInternal(substring);
+        return isPalindromeInternal(string, charIndex + 1);
     }
 
     // печать только чётных значений из списка
