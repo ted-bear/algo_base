@@ -2,6 +2,7 @@ package ru.toporkov.recursion;
 
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.toporkov.recursion.Recursion.calculateListLength;
 import static ru.toporkov.recursion.Recursion.calculateSumOfNumbers;
+import static ru.toporkov.recursion.Recursion.findAllFiles;
 import static ru.toporkov.recursion.Recursion.findSecondMax;
 import static ru.toporkov.recursion.Recursion.isPalindrome;
 import static ru.toporkov.recursion.Recursion.power;
 import static ru.toporkov.recursion.Recursion.printEvenElements;
 import static ru.toporkov.recursion.Recursion.printEvens;
+import static ru.toporkov.utils.RecursionUtils.createTempDirectory;
+import static ru.toporkov.utils.RecursionUtils.createTempDirectoryWithSingleFile;
+import static ru.toporkov.utils.RecursionUtils.createTempDirectoryWithTwoFiles;
+import static ru.toporkov.utils.RecursionUtils.deleteDirectory;
 
 class RecursionTest {
 
@@ -492,5 +498,44 @@ class RecursionTest {
 
         // then
         assertEquals(4, secondMax);
+    }
+
+    @Test
+    void givenEmptyTempDirectory_whenFindAllFiles_thenReturnEmptyList() {
+        // given
+        Path tempDirectory = createTempDirectory();
+
+        // when
+        List<Path> allFiles = findAllFiles(tempDirectory);
+        deleteDirectory(tempDirectory);
+
+        // then
+        assertEquals(0, allFiles.size());
+    }
+
+    @Test
+    void givenTempDirectoryWithSingleFile_whenFindAllFiles_thenReturnOneFile() {
+        // given
+        Path tempDirectory = createTempDirectoryWithSingleFile();
+
+        // when
+        List<Path> allFiles = findAllFiles(tempDirectory);
+        deleteDirectory(tempDirectory);
+
+        // then
+        assertEquals(1, allFiles.size());
+    }
+
+    @Test
+    void givenTempDirectoryWithTwoFiles_whenFindAllFiles_thenReturnTwoFiles() {
+        // given
+        Path tempDirectory = createTempDirectoryWithTwoFiles();
+
+        // when
+        List<Path> allFiles = findAllFiles(tempDirectory);
+        deleteDirectory(tempDirectory);
+
+        // then
+        assertEquals(3, allFiles.size());
     }
 }

@@ -1,6 +1,11 @@
 package ru.toporkov.recursion;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Recursion {
 
@@ -102,7 +107,7 @@ public class Recursion {
         return array[findSecondMax(array, firstMaxIndex, secondMaxIndex, 2)];
     }
 
-    public static int findSecondMax(long[] array, int firstMaxIndex, int secondMaxIndex, int currentIndex) {
+    private static int findSecondMax(long[] array, int firstMaxIndex, int secondMaxIndex, int currentIndex) {
         if (currentIndex >= array.length) {
             return secondMaxIndex;
         }
@@ -115,5 +120,34 @@ public class Recursion {
         }
 
         return findSecondMax(array, firstMaxIndex, secondMaxIndex, currentIndex + 1);
+    }
+
+
+    // поиск всех файлов в заданном каталоге, включая файлы, расположенные в подкаталогах произвольной вложенности
+    public static List<Path> findAllFiles(Path rootDirectory) {
+        List<Path> resultFiles = new ArrayList<>();
+
+        try (Stream<Path> walking = Files.walk(rootDirectory, 1)) {
+            Stream<Path> filesList = walking.skip(1);
+            findAllFiles(filesList, resultFiles);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultFiles;
+    }
+
+    private static void findAllFiles(Stream<Path> paths, List<Path> files) {
+        paths.forEach(file -> {
+            if (Files.isRegularFile(file)) {
+                files.add(file.getFileName());
+            } else {
+                try (Stream<Path> walker = Files.walk(file, 1)) {
+                    findAllFiles(walker.skip(1), files);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }
