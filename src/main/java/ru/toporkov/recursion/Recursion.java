@@ -87,4 +87,33 @@ public class Recursion {
 
 
     // нахождение второго максимального числа в списке (с учётом, что максимальных может быть несколько, если они равны)
+    public static long findSecondMax(long[] array) {
+        if (array.length == 0) {
+            throw new ArrayIndexOutOfBoundsException("Передан пустой массив");
+        }
+
+        if (array.length == 1) {
+            return array[0];
+        }
+
+        int firstMaxIndex = array[0] > array[1] ? 0 : 1;
+        int secondMaxIndex = array[0] > array[1] ? 1 : 0;
+
+        return array[findSecondMax(array, firstMaxIndex, secondMaxIndex, 2)];
+    }
+
+    public static int findSecondMax(long[] array, int firstMaxIndex, int secondMaxIndex, int currentIndex) {
+        if (currentIndex >= array.length) {
+            return secondMaxIndex;
+        }
+
+        if (array[currentIndex] > array[firstMaxIndex]) {
+            secondMaxIndex = firstMaxIndex;
+            firstMaxIndex = currentIndex;
+        } else if (array[currentIndex] > array[secondMaxIndex]) {
+            secondMaxIndex = currentIndex;
+        }
+
+        return findSecondMax(array, firstMaxIndex, secondMaxIndex, currentIndex + 1);
+    }
 }

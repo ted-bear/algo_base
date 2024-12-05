@@ -7,9 +7,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.toporkov.recursion.Recursion.calculateListLength;
 import static ru.toporkov.recursion.Recursion.calculateSumOfNumbers;
+import static ru.toporkov.recursion.Recursion.findSecondMax;
 import static ru.toporkov.recursion.Recursion.isPalindrome;
 import static ru.toporkov.recursion.Recursion.power;
 import static ru.toporkov.recursion.Recursion.printEvenElements;
@@ -407,5 +409,88 @@ class RecursionTest {
     void givenList_whenPrintEvens_givenNothing() {
         List<Integer> numbers = List.of(1, 2, 3, 4, 5);
         printEvens(numbers);
+    }
+
+    /////////////////////////////////////////////////////////////////
+
+    @Test
+    void givenEmptyArray_whenFindSecondMax_thenThrowsException() {
+        // given
+        long[] array = new long[0];
+
+        //when -- then
+        assertThrows(IndexOutOfBoundsException.class, () -> findSecondMax(array));
+    }
+
+    @Test
+    void givenSingleElementArray_whenFindSecondMax_thenReturnFirstElement() {
+        // given
+        long[] array = new long[]{6};
+
+        // when
+        long secondMax = findSecondMax(array);
+
+        // then
+        assertEquals(6, secondMax);
+    }
+
+    @Test
+    void givenTwoElementsArray_whenFindSecondMax_thenReturnSecondMax() {
+        // given
+        long[] array = new long[]{6, 7};
+
+        // when
+        long secondMax = findSecondMax(array);
+
+        // then
+        assertEquals(6, secondMax);
+    }
+
+    @Test
+    void givenTwoEqualsElementsArray_whenFindSecondMax_thenReturnSecondMax() {
+        // given
+        long[] array = new long[]{6, 6};
+
+        // when
+        long secondMax = findSecondMax(array);
+
+        // then
+        assertEquals(6, secondMax);
+    }
+
+    @Test
+    void givenThreeElementsArray_whenFindSecondMax_thenReturnSecondMax() {
+        // given
+        long[] array = new long[]{7, 5, 9};
+
+        // when
+        long secondMax = findSecondMax(array);
+
+        // then
+        assertEquals(7, secondMax);
+    }
+
+    @Test
+    void givenFiveElementsArray_whenFindSecondMax_thenReturnFive() {
+        // given
+        long[] array = new long[]{2, 5, 4, 3, 5};
+
+        // when
+        long secondMax = findSecondMax(array);
+
+        // then
+        assertEquals(5, secondMax);
+    }
+
+    @Test
+    void givenFiveElementsArray_whenFindSecondMax_thenReturnFour() {
+        // given
+        long[] array = new long[]{2, 5, 4, 3, 4};
+
+        // when
+        long secondMax = findSecondMax(array);
+
+        // then
+        assertEquals(4, secondMax);
     }
 }
