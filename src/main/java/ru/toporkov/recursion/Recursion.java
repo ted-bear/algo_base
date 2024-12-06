@@ -128,26 +128,17 @@ public class Recursion {
         List<Path> resultFiles = new ArrayList<>();
 
         try (Stream<Path> walking = Files.walk(rootDirectory, 1)) {
-            Stream<Path> filesList = walking.skip(1);
-            findAllFiles(filesList, resultFiles);
+            walking.skip(1).forEach(file -> {
+                if (Files.isRegularFile(file)) {
+                    resultFiles.add(file.getFileName());
+                } else {
+                    resultFiles.addAll(findAllFiles(file));
+                }
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         return resultFiles;
-    }
-
-    private static void findAllFiles(Stream<Path> paths, List<Path> files) {
-        paths.forEach(file -> {
-            if (Files.isRegularFile(file)) {
-                files.add(file.getFileName());
-            } else {
-                try (Stream<Path> walker = Files.walk(file, 1)) {
-                    findAllFiles(walker.skip(1), files);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
     }
 }
